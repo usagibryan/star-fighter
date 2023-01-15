@@ -16,4 +16,5 @@ class Alien(pygame.sprite.Sprite):
 			self.kill()
 
 	def update(self):
+		self.rect.y += 6
 		self.destroy()
