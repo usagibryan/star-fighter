@@ -5,7 +5,7 @@ from settings import *
 class BG(pygame.sprite.Sprite):
 	def __init__(self,groups,scale_Factor):
 		super().__init__(groups)
-		bg_image = pygame.image.load('../graphics/star_field.png').convert()
+		bg_image = pygame.image.load('../graphics/background.png').convert()
 
 		full_height = bg_image.get_height() * scale_Factor
 		full_width = bg_image.get_width() * scale_Factor
