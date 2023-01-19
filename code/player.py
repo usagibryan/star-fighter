@@ -1,5 +1,6 @@
 import pygame
 from laser import Laser
+#from settings import *
 
 class Player(pygame.sprite.Sprite):
 	def __init__(self,pos,x_constraint,y_constraint,speed):
@@ -19,7 +20,8 @@ class Player(pygame.sprite.Sprite):
 		self.laser_sound = pygame.mixer.Sound('../audio/laser.wav')
 		self.laser_sound.set_volume(0.5)
 
-	def get_input(self):
+	def get_input(self): # Can't go down-left AND shoot laser?
+		# Input for Directions
 		keys = pygame.key.get_pressed()
 		if (keys[pygame.K_w] or keys[pygame.K_UP]):
 			self.rect.y -= self.speed
@@ -37,19 +39,21 @@ class Player(pygame.sprite.Sprite):
 			self.rect.x += self.speed
 			if (keys[pygame.K_TAB]):
 				self.rect.x += self.speed
-
+		# Input to fire Laser
 		if keys[pygame.K_SPACE] and self.ready:
 			self.shoot_laser()
 			self.ready = False
 			self.laser_time = pygame.time.get_ticks()
 			self.laser_sound.play()
 
+	# Cooldown Timer for Laser
 	def recharge(self):
 		if not self.ready:
 			current_time = pygame.time.get_ticks()
 			if current_time - self.laser_time >= self.laser_cooldown:
 				self.ready = True
 
+	# Prevent Player Sprite from going off-screen
 	def constraint(self):
 		if self.rect.left <= 0:
 			self.rect.left = 0
@@ -61,7 +65,8 @@ class Player(pygame.sprite.Sprite):
 			self.rect.bottom = self.max_y_constraint
 
 	def shoot_laser(self):
-		self.lasers.add(Laser(self.rect.center,-8,'red',self.rect.bottom))
+		# Change self.rect.bottom to SCREEN_HEIGHT, in the Space Invaders tutorial the player was always at the bottom of the screen
+		self.lasers.add(Laser(self.rect.center,-8,'red',self.rect.bottom)) 
 
 	def update(self):
 		self.get_input()
