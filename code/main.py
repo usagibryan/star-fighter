@@ -1,9 +1,9 @@
 """
 GOALS:
 
+- add quit game option
 - add original music
 - change laser sounds (player laser and alien lasers should be different)(make alien laser sound less annoying or constant)
-- get scrolling screen to work (was not second blitting, now won't move at all?)
 - add unique start and game overscreens, game_active state
 - add scoring system
 - collision without groupcollide?
@@ -58,7 +58,7 @@ class Game:
 
 		# Audio
 		music = pygame.mixer.Sound('../audio/corneria.mp3')
-		music.set_volume(0.3)
+		music.set_volume(1)
 		music.play(loops = -1)
 		self.laser_sound = pygame.mixer.Sound('../audio/laser.wav')
 		self.laser_sound.set_volume(0.3)
@@ -71,9 +71,9 @@ class Game:
 	def alien_shoot(self):
 		if self.aliens.sprites():
 			random_alien = random.choice(self.aliens.sprites())
-			laser_sprite = Laser(random_alien.rect.center,6,SCREEN_HEIGHT)
+			laser_sprite = Laser(random_alien.rect.center,3,'green',SCREEN_HEIGHT) # 2nd arg is alien laser speed
 			self.alien_lasers.add(laser_sprite)
-			#self.laser_sound.play()
+			#self.laser_sound.play() replace with quieter or less annoying sound
 
 	def collision_checks(self):
 		if self.player.sprite.lasers:
