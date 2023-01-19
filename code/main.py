@@ -16,6 +16,7 @@ GOALS:
 - allow user to change volume in game (options menu?)
 - add animations
 - show controls in game
+- save hi scores
 """
 
 import pygame, sys, random, time
