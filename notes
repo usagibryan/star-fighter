@@ -1,0 +1,28 @@
+Controls:
+- WASD or Arrow Keys to move
+- Spacebar to shoot
+- Hold TAB to move twice as fast
+
+Some assets and code used from Clear Code tutorials ~
+"The ultimate introduction to Pygame" https://youtu.be/AY9MnQ4x3zk
+"Creating Space Invaders in Pygame/Python:" https://youtu.be/o-6pADy5Mdg
+
+Asset Changes to Make:
+- Replace Galaga ship with original player sprite
+- Replace with Space Invaders with original enemy sprites
+- Replace "Corneria - Star Fox" music with original music
+- Add original sound effects
+
+Things to Add:
+- Show controls in game
+- High score and save
+- Menu and options, allow player to change volume and difficulty
+- Pause option
+- Lives or health bar
+- Quit game option
+- Enemy animations
+- Explosion animations for player and enemy
+- Player explosion should delay game over screen
+- Music Channels
+- Bosses
+- Multiple levels/stages
