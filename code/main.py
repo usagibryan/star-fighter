@@ -5,10 +5,13 @@ GOALS:
 - add original music
 - add original sprites
 - add original sound effects
+- add explosions for enemies
+- add explosion/death animation for player, delay game over screen?
 - change laser sounds (player laser and alien lasers should be different)(make alien laser sound less annoying or constant)
 - add menu
 - add pause option
 - add lives or health bar
+- add multiple levels/stages
 - add music channels
 - allow user to change volume in game (options menu?)
 - add animations
