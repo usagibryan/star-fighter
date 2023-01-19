@@ -15,6 +15,7 @@ GOALS:
 - add music channels
 - allow user to change volume in game (options menu?)
 - add animations
+- show controls in game
 """
 
 import pygame, sys, random, time
