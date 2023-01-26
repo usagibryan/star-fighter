@@ -75,6 +75,12 @@ class Game:
 			self.alien_lasers.add(laser_sprite)
 			#self.laser_sound.play() replace with quieter or less annoying sound
 
+	def explode(self,x_pos,y_pos):
+		self.explosion_sound.play()
+		self.explosion = Explosion(x_pos,y_pos)
+		self.exploding_sprites.add(self.explosion)
+		self.explosion.explode()
+
 	def collision_checks(self):
 		if self.player.sprite.lasers:
 			for laser in self.player.sprite.lasers:
@@ -84,21 +90,17 @@ class Game:
 					for alien in aliens_hit:
 						self.score += alien.value
 					laser.kill()
-					self.explosion_sound.play()
-					# print(alien.rect) # get location of alien
-					# print(alien.rect.y)
-					# pygame.draw.ellipse(self.screen,'red',alien.rect) # red circle draws when alien dies
-					self.explosion = Explosion(alien.rect.x,alien.rect.y)
-					self.exploding_sprites.add(self.explosion)
-					self.explosion.explode()
-					# ^ put explosion animation here
+					self.explode(alien.rect.x - 25,alien.rect.y - 25) # why isn't this centered?
+
 		if self.alien_lasers:
 			for laser in self.alien_lasers:
 				if pygame.sprite.spritecollide(laser,self.player,False): # change to game over
 					laser.kill()
+					self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					self.aliens.empty()
 					self.game_active = False
 		if pygame.sprite.spritecollide(self.player.sprite,self.aliens,False): # game over if you touch a ship
+			self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			self.aliens.empty()
 			self.game_active = False
 			
@@ -143,12 +145,12 @@ class Game:
 				self.aliens.update()
 				self.collision_checks()
 
+				self.exploding_sprites.draw(self.screen)
+				self.exploding_sprites.update(0.25) 
 				self.player.sprite.lasers.draw(self.screen)
 				self.player.draw(self.screen)
 				self.aliens.draw(self.screen)
 				self.alien_lasers.draw(self.screen)
-				self.exploding_sprites.draw(self.screen)
-				self.exploding_sprites.update(0.25)
 				self.display_score()
 			else:
 				self.screen.blit(self.player_ship,self.player_ship_rect)

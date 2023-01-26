@@ -4,61 +4,37 @@ class Explosion(pygame.sprite.Sprite):
 	def __init__(self, pos_x, pos_y):
 		super().__init__()
 		self.is_animating = False
+		# sprite sheet from https://www.pngwing.com/en/free-png-xiyem/
+		sprite_sheet = pygame.image.load('../graphics/explosion.png').convert_alpha()
+
+		def get_image(sheet, frame, width ,height, scale):
+			surf = pygame.Surface((width,height)).convert_alpha()
+			surf.blit(sheet,(0,0),((frame*width),0,width,height))
+			surf = pygame.transform.scale(surf, (width * scale, height * scale))
+			return surf
+
 		self.sprites = []
-		self.sprites.append(pygame.image.load('../graphics/attack_1.png'))
-		self.sprites.append(pygame.image.load('../graphics/attack_2.png'))
-		self.sprites.append(pygame.image.load('../graphics/attack_3.png'))
-		self.sprites.append(pygame.image.load('../graphics/attack_4.png'))
-		self.sprites.append(pygame.image.load('../graphics/attack_5.png'))
-		self.sprites.append(pygame.image.load('../graphics/attack_6.png'))
-		self.sprites.append(pygame.image.load('../graphics/attack_7.png'))
-		self.sprites.append(pygame.image.load('../graphics/attack_8.png'))
-		self.sprites.append(pygame.image.load('../graphics/attack_9.png'))
-		self.sprites.append(pygame.image.load('../graphics/attack_10.png'))
+		self.sprites.append(get_image(sprite_sheet,0,192,192,.5))
+		self.sprites.append(get_image(sprite_sheet,1,192,192,.5))
+		self.sprites.append(get_image(sprite_sheet,2,192,192,.5))
+		self.sprites.append(get_image(sprite_sheet,3,192,192,.5))
+		self.sprites.append(get_image(sprite_sheet,4,192,192,.5))
+		self.sprites.append(get_image(sprite_sheet,5,192,192,.5))
+		self.sprites.append(get_image(sprite_sheet,6,192,192,.5))
+
 		self.current_sprite = 0
 		self.image = self.sprites[self.current_sprite]
 
 		self.rect = self.image.get_rect()
-		self.rect.topleft = [pos_x,pos_y]
+		self.rect.topleft = [pos_x,pos_y] # center this?
 
 	def explode(self):
 		self.is_animating = True
 
-	def update(self,speed):
+	def update(self, speed):
 		if self.is_animating == True:
 			self.current_sprite += speed
 			if int(self.current_sprite) >= len(self.sprites):
-				self.current_sprite = 0
-				self.is_animating = False
-
-		self.image = self.sprites[int(self.current_sprite)]
-
-# # General setup
-# pygame.init()
-# clock = pygame.time.Clock()
-
-# # Game Screen
-# screen_width = 400
-# screen_height = 400
-# screen = pygame.display.set_mode((screen_width,screen_height))
-# pygame.display.set_caption("Sprite Animation")
-
-# Creating the sprites and groups
-# moving_sprites = pygame.sprite.Group()
-# explosion = Explosion(100,100)
-# moving_sprites.add(explosion)
-
-# while True:
-# 	for event in pygame.event.get():
-# 		if event.type == pygame.QUIT:
-# 			pygame.quit()
-# 			sys.exit()
-# 		if event.type == pygame.KEYDOWN:
-# 			explosion.attack()
-
-# 	# Drawing
-# 	screen.fill((0,0,0))
-# 	moving_sprites.draw(screen)
-# 	moving_sprites.update(0.25)
-# 	pygame.display.flip()
-# 	clock.tick(60)
+				self.kill()
+			else:
+				self.image = self.sprites[int(self.current_sprite)] 
