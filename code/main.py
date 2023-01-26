@@ -5,6 +5,7 @@ from alien import Alien
 from laser import Laser
 from background import BG
 from crt import CRT
+from explosion import Explosion
 
 class Game:
 	def __init__(self):
@@ -39,12 +40,7 @@ class Game:
 
 		# Background Setup
 		self.background = pygame.sprite.Group()
-
-		# scale factor
-		bg_width = pygame.image.load('../graphics/background.png').get_width()
-		self.scale_factor = SCREEN_WIDTH / bg_width
-
-		BG(self.background,self.scale_factor)
+		BG(self.background)
 
 		# Player setup
 		player_sprite = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2),SCREEN_WIDTH,SCREEN_HEIGHT,2)
@@ -57,8 +53,11 @@ class Game:
 		self.aliens = pygame.sprite.Group()
 		self.alien_lasers = pygame.sprite.Group()
 
+		# Explosion setup
+		self.exploding_sprites = pygame.sprite.Group()
+
 		# Audio
-		music = pygame.mixer.Sound('../audio/corneria.mp3')
+		music = pygame.mixer.Sound('../audio/brinstar.mp3')
 		music.set_volume(1)
 		music.play(loops = -1)
 		self.laser_sound = pygame.mixer.Sound('../audio/laser.wav')
@@ -86,6 +85,13 @@ class Game:
 						self.score += alien.value
 					laser.kill()
 					self.explosion_sound.play()
+					# print(alien.rect) # get location of alien
+					# print(alien.rect.y)
+					# pygame.draw.ellipse(self.screen,'red',alien.rect) # red circle draws when alien dies
+					self.explosion = Explosion(alien.rect.x,alien.rect.y)
+					self.exploding_sprites.add(self.explosion)
+					self.explosion.explode()
+					# ^ put explosion animation here
 		if self.alien_lasers:
 			for laser in self.alien_lasers:
 				if pygame.sprite.spritecollide(laser,self.player,False): # change to game over
@@ -104,7 +110,7 @@ class Game:
 	def run(self):
 		last_time = time.time()
 		while True:
-			# delta time
+			# delta time (scrolling background breaks without delta time?)
 			dt = time.time() - last_time
 			last_time = time.time()
 
@@ -141,6 +147,8 @@ class Game:
 				self.player.draw(self.screen)
 				self.aliens.draw(self.screen)
 				self.alien_lasers.draw(self.screen)
+				self.exploding_sprites.draw(self.screen)
+				self.exploding_sprites.update(0.25)
 				self.display_score()
 			else:
 				self.screen.blit(self.player_ship,self.player_ship_rect)
