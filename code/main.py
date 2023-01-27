@@ -17,7 +17,7 @@ class Game:
 		self.clock = pygame.time.Clock()
 		self.game_active = False
 		self.font = pygame.font.Font('../font/Pixeled.ttf',20)
-		self.font_color = ('white')
+		self.font_color = 'white'
 		self.crt = CRT(self.screen)
 
 		# Intro screen
@@ -33,10 +33,10 @@ class Game:
 
 		# Timers
 		self.alien_timer = pygame.USEREVENT + 1
-		pygame.time.set_timer(self.alien_timer,2000) # lower numbers = faster rate of enemy spawn
+		pygame.time.set_timer(self.alien_timer,800) # lower numbers = faster rate of enemy spawn
 
-		self.ALIENLASER = pygame.USEREVENT + 1
-		pygame.time.set_timer(self.ALIENLASER,400)
+		self.ALIENLASER = pygame.USEREVENT + 2 # understand how this works better, when both set to 1 this timer affected both
+		pygame.time.set_timer(self.ALIENLASER,400) # lower numbers = more lasers
 
 		# Background Setup
 		self.background = pygame.sprite.Group()
@@ -96,11 +96,11 @@ class Game:
 			for laser in self.alien_lasers:
 				if pygame.sprite.spritecollide(laser,self.player,False): # change to game over
 					laser.kill()
-					self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+					# self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					self.aliens.empty()
 					self.game_active = False
 		if pygame.sprite.spritecollide(self.player.sprite,self.aliens,False): # game over if you touch a ship
-			self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+			# self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			self.aliens.empty()
 			self.game_active = False
 			
@@ -146,7 +146,7 @@ class Game:
 				self.collision_checks()
 
 				self.exploding_sprites.draw(self.screen)
-				self.exploding_sprites.update(0.25) 
+				self.exploding_sprites.update(0.15) # smaller numbers = slower explosion animation. Always 0.x
 				self.player.sprite.lasers.draw(self.screen)
 				self.player.draw(self.screen)
 				self.aliens.draw(self.screen)
