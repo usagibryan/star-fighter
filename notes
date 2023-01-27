@@ -21,6 +21,7 @@ Things to Add:
 - Lives or health bar
 - Quit game option
 - Enemy animations
+- fix transparency issue in explosion animation
 - Explosion animations for player / give time to show animation before game ends
 - Player explosion should delay game over screen
 - Music Channels
