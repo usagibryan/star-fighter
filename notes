@@ -2,6 +2,8 @@ Controls:
 - WASD or Arrow Keys to move
 - Spacebar to shoot
 - Hold TAB to move twice as fast
+- Alt + Enter to toggle full screen
+- Esc to pause
 
 Some assets and code used from Clear Code tutorials ~
 "The ultimate introduction to Pygame" https://youtu.be/AY9MnQ4x3zk
