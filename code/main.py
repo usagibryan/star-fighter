@@ -20,6 +20,7 @@ class Game:
 		self.font = pygame.font.Font('../font/Pixeled.ttf',20)
 		self.font_color = 'white'
 		self.crt = CRT(self.screen)
+		self.paused = False
 
 		# Intro screen
 		self.player_ship = pygame.image.load('../graphics/player_ship.png').convert_alpha()
@@ -106,9 +107,25 @@ class Game:
 			self.game_active = False
 			
 	def display_score(self):
-		score_surf = self.font.render(f'score: {self.score}',False,'white')
+		score_surf = self.font.render(f'score: {self.score}',False,self.font_color)
 		score_rect = score_surf.get_rect(topleft = (10,-10))
 		self.screen.blit(score_surf,score_rect)
+
+	def pause(self):
+		self.paused = not self.paused
+		while self.paused:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+					sys.exit()
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						self.paused = False
+			self.screen.fill((0, 0, 0))
+			pause_text = self.font.render('PAUSED', False, (self.font_color))
+			pause_text_rect = pause_text.get_rect(center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+			self.screen.blit(pause_text,pause_text_rect)
+			pygame.display.update()
 
 	def run(self):
 		last_time = time.time()
@@ -125,6 +142,8 @@ class Game:
 				if event.type == pygame.KEYDOWN:
 					if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
 						pygame.display.toggle_fullscreen()
+					if event.key == pygame.K_ESCAPE:
+						self.pause()
 				if self.game_active:
 					if event.type == self.alien_timer:
 						alien_color = random.choice(['red','green','yellow'])
