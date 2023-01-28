@@ -29,7 +29,7 @@ class Game:
 		self.game_name = self.font.render('STAR FIGHTER',False,(self.font_color))
 		self.game_name_rect = self.game_name.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 - 100))
 
-		self.game_message = self.font.render('PRESS SPACE TO BEGIN',False,(self.font_color))
+		self.game_message = self.font.render('PRESS ENTER TO BEGIN',False,(self.font_color))
 		self.game_message_rect = self.game_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 100))
 
 		# Timers
@@ -60,9 +60,9 @@ class Game:
 		# Audio
 		music = pygame.mixer.Sound('../audio/star_hero.mp3')
 		music.set_volume(1) # can't change any volume?
-		music.play(loops = -1)
+		music.play(loops = -1) # need smoother transition after loop
 		self.laser_sound = pygame.mixer.Sound('../audio/laser.wav')
-		self.laser_sound.set_volume(0.3)
+		self.laser_sound.set_volume(0.1)
 		self.explosion_sound = pygame.mixer.Sound('../audio/explosion.wav')
 		self.explosion_sound.set_volume(0.5)
 
@@ -132,7 +132,7 @@ class Game:
 					if event.type == self.ALIENLASER:
 						game.alien_shoot()
 				else:
-					if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+					if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
 						self.score = 0
 						self.game_active = True
 
