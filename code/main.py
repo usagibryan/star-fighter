@@ -6,6 +6,7 @@ from laser import Laser
 from background import BG
 from crt import CRT
 from explosion import Explosion
+import debug
 
 class Game:
 	def __init__(self):
@@ -57,8 +58,8 @@ class Game:
 		self.exploding_sprites = pygame.sprite.Group()
 
 		# Audio
-		music = pygame.mixer.Sound('../audio/brinstar.mp3')
-		music.set_volume(1)
+		music = pygame.mixer.Sound('../audio/star_hero.mp3')
+		music.set_volume(1) # can't change any volume?
 		music.play(loops = -1)
 		self.laser_sound = pygame.mixer.Sound('../audio/laser.wav')
 		self.laser_sound.set_volume(0.3)
@@ -112,6 +113,7 @@ class Game:
 	def run(self):
 		last_time = time.time()
 		while True:
+			# print(str(self.clock.get_fps())) # use debug to print this?
 			# delta time (scrolling background breaks without delta time?)
 			dt = time.time() - last_time
 			last_time = time.time()

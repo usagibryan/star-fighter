@@ -7,7 +7,7 @@ class Alien(pygame.sprite.Sprite):
 		self.color = color
 		self.screen_width = screen_width
 		self.screen_height = screen_height
-		x_pos  = random.randint(10,self.screen_width - 10)
+		x_pos  = random.randint(20,self.screen_width - 20)
 		file_path = '../graphics/' + self.color + '.png'
 		self.image = pygame.image.load(file_path).convert_alpha()
 		self.rect = self.image.get_rect(center = (x_pos,random.randint(-300,-100)))
