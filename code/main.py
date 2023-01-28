@@ -153,6 +153,7 @@ class Game:
 				else:
 					if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
 						self.score = 0
+						self.player.sprite.rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 						self.game_active = True
 
 			self.screen.fill((30,30,30))
