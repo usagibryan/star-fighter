@@ -1,14 +1,14 @@
 import pygame, sys, random, time
 from settings import *
+from background import BG
 from player import Player
 from alien import Alien
-from laser import Laser
-from background import BG
-from crt import CRT
 from explosion import Explosion
+from laser import Laser
+from crt import CRT
 import debug
 
-class Game:
+class GameManager:
 	def __init__(self):
 
 		# Game setup
@@ -32,6 +32,11 @@ class Game:
 
 		self.game_message = self.font.render('PRESS ENTER TO BEGIN',False,(self.font_color))
 		self.game_message_rect = self.game_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 100))
+
+		# health and score setup
+		self.lives = 3
+		self.live_surf = pygame.image.load('../graphics/player_ship.png').convert_alpha()
+		self.live_x_start_pos = SCREEN_WIDTH - (self.live_surf.get_size()[0] * 2 + 20)
 
 		# Timers
 		self.alien_timer = pygame.USEREVENT + 1
@@ -98,18 +103,27 @@ class Game:
 			for laser in self.alien_lasers:
 				if pygame.sprite.spritecollide(laser,self.player,False): # change to game over
 					laser.kill()
-					# self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
-					self.aliens.empty()
-					self.game_active = False
-		if pygame.sprite.spritecollide(self.player.sprite,self.aliens,False): # game over if you touch a ship
-			# self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
-			self.aliens.empty()
-			self.game_active = False
+					self.lives -= 1
+					self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+					if self.lives <= 0:
+						self.aliens.empty()
+						self.game_active = False
+		if pygame.sprite.spritecollide(self.player.sprite,self.aliens,True): # game over if you touch a ship
+			self.lives -= 1
+			self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+			if self.lives <= 0:
+				self.aliens.empty()
+				self.game_active = False
 			
 	def display_score(self):
 		score_surf = self.font.render(f'score: {self.score}',False,self.font_color)
 		score_rect = score_surf.get_rect(topleft = (10,-10))
 		self.screen.blit(score_surf,score_rect)
+
+	def display_lives(self):
+		for live in range(self.lives - 1):
+			x = self.live_x_start_pos + (live * (self.live_surf.get_size()[0] + 10))
+			self.screen.blit(self.live_surf,(x,8))
 
 	def pause(self):
 		self.paused = not self.paused
@@ -119,6 +133,8 @@ class Game:
 					pygame.quit()
 					sys.exit()
 				if event.type == pygame.KEYDOWN:
+					if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
+						pygame.display.toggle_fullscreen()
 					if event.key == pygame.K_ESCAPE:
 						self.paused = False
 			self.screen.fill((0, 0, 0))
@@ -147,13 +163,14 @@ class Game:
 				if self.game_active:
 					if event.type == self.alien_timer:
 						alien_color = random.choice(['red','green','yellow'])
-						game.spawn_aliens(alien_color)
+						self.spawn_aliens(alien_color)
 					if event.type == self.ALIENLASER:
-						game.alien_shoot()
+						self.alien_shoot()
 				else:
 					if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
 						self.score = 0
 						self.player.sprite.rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+						self.lives = 3
 						self.game_active = True
 
 			self.screen.fill((30,30,30))
@@ -166,6 +183,7 @@ class Game:
 
 				self.aliens.update()
 				self.collision_checks()
+				self.display_lives()
 
 				self.exploding_sprites.draw(self.screen)
 				self.exploding_sprites.update(0.15) # smaller numbers = slower explosion animation. Always 0.x
@@ -189,5 +207,5 @@ class Game:
 			self.clock.tick(FRAMERATE)
 
 if __name__ == '__main__':
-	game = Game()
-	game.run()
+	game_manager = GameManager()
+	game_manager.run()
