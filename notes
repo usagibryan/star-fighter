@@ -12,15 +12,14 @@ Some assets and code used from Clear Code tutorials ~
 Asset Changes to Make:
 - Replace Galaga ship with original player sprite
 - Replace with Space Invaders with original enemy sprites
-- Replace "Corneria - Star Fox" music with original music
 - Add original sound effects
 
 Things to Add:
 - Show controls in game
 - High score and save
 - Menu and options, allow player to change volume and difficulty
-- Pause option
-- Lives or health bar
+- Add healthbar, player should explode on death and appear from bottom of screen
+- get extra lives, maybe items that float down or reward for high score?
 - Quit game option
 - Enemy animations
 - fix transparency issue in explosion animation
