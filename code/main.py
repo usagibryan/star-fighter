@@ -33,7 +33,7 @@ class GameManager:
 		self.game_message = self.font.render('PRESS ENTER TO BEGIN',False,(self.font_color))
 		self.game_message_rect = self.game_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 100))
 
-		# health and score setup
+		# Health and Lives
 		self.lives = 3
 		self.live_surf = pygame.image.load('../graphics/player_ship.png').convert_alpha()
 		self.live_x_start_pos = SCREEN_WIDTH - (self.live_surf.get_size()[0] * 2 + 20)
@@ -89,9 +89,9 @@ class GameManager:
 		self.explosion.explode()
 
 	def collision_checks(self):
+		# when the player shoots an alien
 		if self.player.sprite.lasers:
 			for laser in self.player.sprite.lasers:
-				# alien collisions
 				aliens_hit = pygame.sprite.spritecollide(laser,self.aliens,True)
 				if aliens_hit:
 					for alien in aliens_hit:
@@ -99,16 +99,22 @@ class GameManager:
 					laser.kill()
 					self.explode(alien.rect.x - 25,alien.rect.y - 25) # why isn't this centered?
 
+		# when an alien shoots the player
 		if self.alien_lasers:
 			for laser in self.alien_lasers:
-				if pygame.sprite.spritecollide(laser,self.player,False): # change to game over
+				if pygame.sprite.spritecollide(laser,self.player,False):
 					laser.kill()
 					self.lives -= 1
 					self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.lives <= 0:
 						self.aliens.empty()
 						self.game_active = False
-		if pygame.sprite.spritecollide(self.player.sprite,self.aliens,True): # game over if you touch a ship
+
+		# when an alien and the player collide
+		aliens_crash = pygame.sprite.spritecollide(self.player.sprite,self.aliens,True)
+		if aliens_crash:
+			for alien in aliens_crash:
+				self.score += alien.value
 			self.lives -= 1
 			self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.lives <= 0:
@@ -185,10 +191,10 @@ class GameManager:
 				self.collision_checks()
 				self.display_lives()
 
-				self.exploding_sprites.draw(self.screen)
-				self.exploding_sprites.update(0.15) # smaller numbers = slower explosion animation. Always 0.x
 				self.player.sprite.lasers.draw(self.screen)
 				self.player.draw(self.screen)
+				self.exploding_sprites.draw(self.screen)
+				self.exploding_sprites.update(0.15) # smaller numbers = slower explosion animation. Always 0.x
 				self.aliens.draw(self.screen)
 				self.alien_lasers.draw(self.screen)
 				self.display_score()
