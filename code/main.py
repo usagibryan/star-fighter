@@ -78,6 +78,7 @@ class GameManager:
 
 		self.explosion_sound = pygame.mixer.Sound('../audio/explosion.wav')
 		self.explosion_sound.set_volume(0.3)
+		self.channel_2 = pygame.mixer.Channel(2)
 
 		self.player_down = pygame.mixer.Sound('../audio/player_down.mp3')
 		self.player_down.set_volume(1) # play faster?
@@ -93,7 +94,9 @@ class GameManager:
 			#self.laser_sound.play() replace with quieter or less annoying sound
 
 	def explode(self,x_pos,y_pos):
-		self.explosion_sound.play()
+		if not self.channel_2.get_busy():
+					self.channel_2.play(self.explosion_sound)
+		# self.explosion_sound.play()
 		self.explosion = Explosion(x_pos,y_pos)
 		self.exploding_sprites.add(self.explosion)
 		self.explosion.explode()
