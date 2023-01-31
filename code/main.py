@@ -64,13 +64,23 @@ class GameManager:
 		self.exploding_sprites = pygame.sprite.Group()
 
 		# Audio
-		music = pygame.mixer.Sound('../audio/star_hero.mp3')
-		music.set_volume(1) # can't change any volume?
-		music.play(loops = -1) # need smoother transition after loop
+		self.intro_music = pygame.mixer.Sound('../audio/star_fox_controls.mp3')
+		self.intro_music.set_volume(1)
+		self.channel_0 = pygame.mixer.Channel(0)
+		self.play_intro_music = True # Set to False after user begins, only place once
+		
+		self.bg_music = pygame.mixer.Sound('../audio/corneria.mp3')
+		self.bg_music.set_volume(1)
+		self.channel_1 = pygame.mixer.Channel(1)
+		
 		self.laser_sound = pygame.mixer.Sound('../audio/laser.wav')
-		self.laser_sound.set_volume(0.1)
+		self.laser_sound.set_volume(0.5)
+
 		self.explosion_sound = pygame.mixer.Sound('../audio/explosion.wav')
-		self.explosion_sound.set_volume(0.5)
+		self.explosion_sound.set_volume(0.3)
+
+		self.player_down = pygame.mixer.Sound('../audio/player_down.mp3')
+		self.player_down.set_volume(1) # play faster?
 
 	def spawn_aliens(self,alien_color):
 		self.aliens.add(Alien(alien_color,SCREEN_WIDTH,SCREEN_HEIGHT))
@@ -107,6 +117,7 @@ class GameManager:
 					self.lives -= 1
 					self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.lives <= 0:
+						self.player_down.play()
 						self.aliens.empty()
 						self.game_active = False
 
@@ -118,6 +129,7 @@ class GameManager:
 			self.lives -= 1
 			self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.lives <= 0:
+				self.player_down.play()
 				self.aliens.empty()
 				self.game_active = False
 			
@@ -184,6 +196,10 @@ class GameManager:
 			self.background.draw(self.screen)
 
 			if self.game_active:
+				self.channel_0.stop()
+				self.play_intro_music = False
+				if not self.channel_1.get_busy():
+					self.channel_1.play(self.bg_music)
 				self.player.update()
 				self.alien_lasers.update()
 
@@ -199,6 +215,10 @@ class GameManager:
 				self.alien_lasers.draw(self.screen)
 				self.display_score()
 			else:
+				self.channel_1.stop()
+				if self.play_intro_music == True:
+					if not self.channel_0.get_busy():
+						self.channel_0.play(self.intro_music)
 				self.screen.blit(self.player_ship,self.player_ship_rect)
 
 				score_message = self.font.render(f'YOUR SCORE: {self.score}',False,(self.font_color))
