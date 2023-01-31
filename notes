@@ -14,6 +14,12 @@ Asset Changes to Make:
 - Replace with Space Invaders with original enemy sprites
 - Add original sound effects
 
+Audio Problems:
+sound effects sound like ping pong balls after adding second music channel, adding sound effects to their own channels fixed this but can only play one after another
+(if laser fires twice in a row you will only here it once)
+
+Try https://www.pygame.org/docs/ref/music.html instead of the sound class for music, gives more control like queue music.
+
 Things to Add:
 - Show controls in game
 - High score and save
