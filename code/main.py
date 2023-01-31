@@ -95,7 +95,7 @@ class GameManager:
 
 	def explode(self,x_pos,y_pos):
 		if not self.channel_2.get_busy():
-					self.channel_2.play(self.explosion_sound)
+			self.channel_2.play(self.explosion_sound)
 		# self.explosion_sound.play()
 		self.explosion = Explosion(x_pos,y_pos)
 		self.exploding_sprites.add(self.explosion)
