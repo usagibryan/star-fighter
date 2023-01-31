@@ -1,4 +1,5 @@
-background music by me
+"Star Hero" music by me
+placeholder music from Star Fox SNES by Hajime Hirasawa
 game sounds from SubspaceAudio: https://opengameart.org/content/512-sound-effects-8-bit-style
 space invaders and CRT graphics by Clear Code
 ship sprite from Galaga
