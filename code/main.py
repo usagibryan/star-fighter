@@ -73,8 +73,8 @@ class GameManager:
 		self.bg_music.set_volume(1)
 		self.channel_1 = pygame.mixer.Channel(1)
 		
-		self.laser_sound = pygame.mixer.Sound('../audio/laser.wav')
-		self.laser_sound.set_volume(0.5)
+		# self.laser_sound = pygame.mixer.Sound('../audio/laser.wav')
+		# self.laser_sound.set_volume(0.5)
 
 		self.explosion_sound = pygame.mixer.Sound('../audio/explosion.wav')
 		self.explosion_sound.set_volume(0.3)
