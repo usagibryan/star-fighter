@@ -20,6 +20,8 @@ sound effects sound like ping pong balls after adding second music channel, addi
 
 Try https://www.pygame.org/docs/ref/music.html instead of the sound class for music, gives more control like queue music.
 
+Use 'channel_#.play(music, -1)' to loop instead?
+
 Things to Add:
 - Show controls in game
 - High score and save
