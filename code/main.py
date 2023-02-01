@@ -1,4 +1,5 @@
 import pygame, sys, random, time
+import json
 from settings import *
 from background import BG
 from player import Player
@@ -55,6 +56,15 @@ class GameManager:
 
 		# Score setup
 		self.score = 0
+		self.save_data = {
+			'high_score' : 0
+		}
+
+		try:
+			with open('high_score.txt') as high_score_file:
+				self.save_data = json.load(high_score_file)
+		except:
+			print('No file created yet')
 
 		# Alien setup
 		self.aliens = pygame.sprite.Group()
@@ -137,8 +147,12 @@ class GameManager:
 				self.game_active = False
 			
 	def display_score(self):
-		score_surf = self.font.render(f'score: {self.score}',False,self.font_color)
-		score_rect = score_surf.get_rect(topleft = (10,-10))
+		high_score_surf = self.font.render(f'HIGH SCORE: {self.save_data["high_score"]}',False,self.font_color)
+		high_score_rect = high_score_surf.get_rect(topleft = (10,-10))
+		self.screen.blit(high_score_surf,high_score_rect)
+
+		score_surf = self.font.render(f'SCORE: {self.score}',False,self.font_color)
+		score_rect = score_surf.get_rect(topleft = (10,20))
 		self.screen.blit(score_surf,score_rect)
 
 	def display_lives(self):
@@ -151,6 +165,10 @@ class GameManager:
 		while self.paused:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
+					if self.score > self.save_data['high_score']:
+						self.save_data['high_score'] = self.score
+						with open('high_score.txt','w') as high_score_file:
+							json.dump(self.save_data,high_score_file)
 					pygame.quit()
 					sys.exit()
 				if event.type == pygame.KEYDOWN:
@@ -174,6 +192,10 @@ class GameManager:
 
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
+					if self.score > self.save_data['high_score']:
+						self.save_data['high_score'] = self.score
+						with open('high_score.txt','w') as high_score_file:
+							json.dump(self.save_data,high_score_file)
 					pygame.quit()
 					sys.exit()
 				if event.type == pygame.KEYDOWN:
@@ -224,12 +246,18 @@ class GameManager:
 						self.channel_0.play(self.intro_music)
 				self.screen.blit(self.player_ship,self.player_ship_rect)
 
+
+				high_score_message = self.font.render(f'HIGH SCORE: {self.save_data["high_score"]}',False,(self.font_color))
+				high_score_message_rect = high_score_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 100))
 				score_message = self.font.render(f'YOUR SCORE: {self.score}',False,(self.font_color))
-				score_message_rect = score_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 100))
+				score_message_rect = score_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 130))
 				self.screen.blit(self.game_name,self.game_name_rect)
 
-				if self.score == 0: self.screen.blit(self.game_message,self.game_message_rect)
-				else: self.screen.blit(score_message,score_message_rect)
+				if self.score == 0:
+					self.screen.blit(self.game_message,self.game_message_rect)
+				else:
+					self.screen.blit(high_score_message,high_score_message_rect)
+					self.screen.blit(score_message,score_message_rect)
 				
 			self.crt.draw()
 			pygame.display.flip()
