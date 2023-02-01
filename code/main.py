@@ -32,7 +32,7 @@ class GameManager:
 		self.game_name_rect = self.game_name.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 - 100))
 
 		self.game_message = self.font.render('PRESS ENTER TO BEGIN',False,(self.font_color))
-		self.game_message_rect = self.game_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 100))
+		self.game_message_rect = self.game_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 130))
 
 		# Health and Lives
 		self.lives = 3
@@ -145,6 +145,10 @@ class GameManager:
 				self.player_down.play()
 				self.aliens.empty()
 				self.game_active = False
+
+	def score_check(self):
+		if self.score > self.save_data['high_score']:
+			self.save_data['high_score'] = self.score
 			
 	def display_score(self):
 		high_score_surf = self.font.render(f'HIGH SCORE: {self.save_data["high_score"]}',False,self.font_color)
@@ -165,10 +169,8 @@ class GameManager:
 		while self.paused:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
-					if self.score > self.save_data['high_score']:
-						self.save_data['high_score'] = self.score
-						with open('high_score.txt','w') as high_score_file:
-							json.dump(self.save_data,high_score_file)
+					with open('high_score.txt','w') as high_score_file:
+						json.dump(self.save_data,high_score_file)
 					pygame.quit()
 					sys.exit()
 				if event.type == pygame.KEYDOWN:
@@ -192,10 +194,8 @@ class GameManager:
 
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
-					if self.score > self.save_data['high_score']:
-						self.save_data['high_score'] = self.score
-						with open('high_score.txt','w') as high_score_file:
-							json.dump(self.save_data,high_score_file)
+					with open('high_score.txt','w') as high_score_file:
+						json.dump(self.save_data,high_score_file)
 					pygame.quit()
 					sys.exit()
 				if event.type == pygame.KEYDOWN:
@@ -238,6 +238,7 @@ class GameManager:
 				self.exploding_sprites.update(0.15) # smaller numbers = slower explosion animation. Always 0.x
 				self.aliens.draw(self.screen)
 				self.alien_lasers.draw(self.screen)
+				self.score_check()
 				self.display_score()
 			else:
 				self.channel_1.stop()
@@ -254,6 +255,7 @@ class GameManager:
 				self.screen.blit(self.game_name,self.game_name_rect)
 
 				if self.score == 0:
+					self.screen.blit(high_score_message,high_score_message_rect)
 					self.screen.blit(self.game_message,self.game_message_rect)
 				else:
 					self.screen.blit(high_score_message,high_score_message_rect)
