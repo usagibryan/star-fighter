@@ -40,11 +40,11 @@ class GameManager:
 		self.live_x_start_pos = SCREEN_WIDTH - (self.live_surf.get_size()[0] * 2 + 20)
 
 		# Timers
-		self.alien_timer = pygame.USEREVENT + 1
-		pygame.time.set_timer(self.alien_timer,800) # lower numbers = faster rate of enemy spawn
+		self.alien_spawn_timer = pygame.event.custom_type()
+		pygame.time.set_timer(self.alien_spawn_timer,800) # lower numbers = faster rate of enemy spawn
 
-		self.ALIENLASER = pygame.USEREVENT + 2 # understand how this works better, when both set to 1 this timer affected both
-		pygame.time.set_timer(self.ALIENLASER,400) # lower numbers = more lasers
+		self.alien_laser_timer = pygame.event.custom_type()
+		pygame.time.set_timer(self.alien_laser_timer,400) # lower numbers = more lasers
 
 		# Background Setup
 		self.background = pygame.sprite.Group()
@@ -204,10 +204,10 @@ class GameManager:
 					if event.key == pygame.K_ESCAPE:
 						self.pause()
 				if self.game_active:
-					if event.type == self.alien_timer:
+					if event.type == self.alien_spawn_timer:
 						alien_color = random.choice(['red','green','yellow'])
 						self.spawn_aliens(alien_color)
-					if event.type == self.ALIENLASER:
+					if event.type == self.alien_laser_timer:
 						self.alien_shoot()
 				else:
 					if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
