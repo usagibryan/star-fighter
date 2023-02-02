@@ -37,14 +37,8 @@ class GameManager:
 		# Health and Lives
 		self.lives = 3
 		self.live_surf = pygame.image.load('graphics/player_ship.png').convert_alpha()
+		self.live_surf = pygame.transform.rotozoom(self.player_ship,0,0.3)
 		self.live_x_start_pos = SCREEN_WIDTH - (self.live_surf.get_size()[0] * 2 + 20)
-
-		# Timers
-		self.alien_spawn_timer = pygame.event.custom_type()
-		pygame.time.set_timer(self.alien_spawn_timer,800) # lower numbers = faster rate of enemy spawn
-
-		self.alien_laser_timer = pygame.event.custom_type()
-		pygame.time.set_timer(self.alien_laser_timer,400) # lower numbers = more lasers
 
 		# Background Setup
 		self.background = pygame.sprite.Group()
@@ -65,6 +59,15 @@ class GameManager:
 				self.save_data = json.load(high_score_file)
 		except:
 			print('No file created yet')
+
+		# Timers
+		self.alien_spawn_rate = 800 # lower numbers = faster rate of enemy spawn
+		self.alien_spawn_timer = pygame.event.custom_type()
+		pygame.time.set_timer(self.alien_spawn_timer,self.alien_spawn_rate - int(self.score / 10))
+
+		self.alien_laser_rate = 400 # lower numbers = more lasers
+		self.alien_laser_timer = pygame.event.custom_type()
+		pygame.time.set_timer(self.alien_laser_timer,self.alien_laser_rate - int(self.score / 10))
 
 		# Alien setup
 		self.aliens = pygame.sprite.Group()
@@ -151,8 +154,8 @@ class GameManager:
 			self.save_data['high_score'] = self.score
 			
 	def display_score(self):
-		high_score_surf = self.font.render(f'HIGH SCORE: {self.save_data["high_score"]}',False,self.font_color)
-		high_score_rect = high_score_surf.get_rect(topleft = (10,-10))
+		high_score_surf = pygame.font.Font('font/Pixeled.ttf',10).render(f'HIGH SCORE: {self.save_data["high_score"]}',False,self.font_color)
+		high_score_rect = high_score_surf.get_rect(topleft = (10,5))
 		self.screen.blit(high_score_surf,high_score_rect)
 
 		score_surf = self.font.render(f'SCORE: {self.score}',False,self.font_color)
@@ -240,6 +243,7 @@ class GameManager:
 				self.alien_lasers.draw(self.screen)
 				self.score_check()
 				self.display_score()
+				# debug.debug(self.alien_spawn_rate)
 			else:
 				self.channel_1.stop()
 				if self.play_intro_music == True:

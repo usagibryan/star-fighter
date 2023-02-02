@@ -27,6 +27,7 @@ Try https://www.pygame.org/docs/ref/music.html instead of the sound class for mu
 Use 'channel_#.play(music, -1)' to loop instead?
 
 Things to Add:
+- Figure out how to use increasing score to increase rate of alien and laser spawn
 - Show controls in game
 - High score and save
 - Menu and options, allow player to change volume and difficulty
