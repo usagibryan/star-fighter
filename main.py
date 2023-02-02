@@ -1,12 +1,9 @@
-import pygame, sys, random, time
+import pygame
+import sys, random, time
 import json
 from settings import *
-from background import BG
-from player import Player
-from alien import Alien
-from explosion import Explosion
-from laser import Laser
-from crt import CRT
+from animations import BG, Explosion, CRT
+from sprites import Laser, Player, Alien
 import debug
 
 class GameManager:
