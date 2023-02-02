@@ -1,4 +1,4 @@
-# this is a test to see if commiting to github works
+# this is a test to see if .gitignore worked on __pycache__ and high_score.txt
 
 fix issue with high score only saving when game is closed, not when player dies
 
