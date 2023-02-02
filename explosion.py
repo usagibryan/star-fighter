@@ -6,7 +6,7 @@ class Explosion(pygame.sprite.Sprite):
 		self.is_animating = False
 		
 		# sprite sheet from https://www.pngwing.com/en/free-png-xiyem/
-		sprite_sheet = pygame.image.load('../graphics/explosion.png').convert_alpha()
+		sprite_sheet = pygame.image.load('graphics/explosion.png').convert_alpha()
 
 		self.sprites = []
 		self.sprites.append(self.get_image(sprite_sheet,0,192,192,.5))
