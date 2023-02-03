@@ -2,7 +2,7 @@ import pygame
 import sys, random, time
 import json
 from settings import *
-from animations import BG, Explosion, CRT
+from animations import Background, Explosion, CRT
 from sprites import Laser, Player, Alien
 from style import Style
 import debug
@@ -28,7 +28,7 @@ class GameManager:
 
 		# Background Setup
 		self.background = pygame.sprite.Group()
-		BG(self.background)
+		Background(self.background)
 
 		# Player setup
 		player_sprite = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2),SCREEN_WIDTH,SCREEN_HEIGHT,2)
@@ -219,7 +219,6 @@ class GameManager:
 				if self.play_intro_music == True:
 					if not self.channel_0.get_busy():
 						self.channel_0.play(self.intro_music)
-				# self.screen.blit(self.player_ship,self.player_ship_rect)
 
 				if self.score == 0:
 					self.style.update('intro',self.save_data,self.score)

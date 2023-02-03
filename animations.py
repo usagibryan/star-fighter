@@ -3,7 +3,7 @@ import random
 from settings import *
 
 # see https://www.youtube.com/watch?v=VUFvY349ess for more details
-class BG(pygame.sprite.Sprite):
+class Background(pygame.sprite.Sprite):
 	def __init__(self,groups):
 		super().__init__(groups)
 		bg_image = pygame.image.load('graphics/background.png').convert()
