@@ -20,15 +20,10 @@ class GameManager:
 		self.crt = CRT(self.screen)
 		self.paused = False
 
-		# Intro screen
-		self.player_ship = pygame.image.load('graphics/player_ship.png').convert_alpha()
-		self.player_ship = pygame.transform.rotozoom(self.player_ship,0,5)
-		self.player_ship_rect = self.player_ship.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
-
 		# Health and Lives
 		self.lives = 3
 		self.live_surf = pygame.image.load('graphics/player_ship.png').convert_alpha()
-		self.live_surf = pygame.transform.rotozoom(self.player_ship,0,0.3)
+		self.live_surf = pygame.transform.rotozoom(self.live_surf,0,0.3)
 		self.live_x_start_pos = SCREEN_WIDTH - (self.live_surf.get_size()[0] * 2 + 20)
 
 		# Background Setup
@@ -159,7 +154,7 @@ class GameManager:
 					if event.key == pygame.K_ESCAPE:
 						self.paused = False
 			self.screen.fill((0, 0, 0))
-			self.style.display_pause_text()
+			self.style.update('pause',self.save_data,self.score)
 			pygame.display.update()
 
 	def run(self):
@@ -217,22 +212,19 @@ class GameManager:
 				self.aliens.draw(self.screen)
 				self.alien_lasers.draw(self.screen)
 				self.score_check()
-				self.style.display_in_game_score(self.save_data,self.score)
+				self.style.update('game_active',self.save_data,self.score)
 				# debug.debug(self.alien_spawn_rate)
 			else:
 				self.channel_1.stop()
 				if self.play_intro_music == True:
 					if not self.channel_0.get_busy():
 						self.channel_0.play(self.intro_music)
-				self.style.display_title()
-				self.screen.blit(self.player_ship,self.player_ship_rect)
+				# self.screen.blit(self.player_ship,self.player_ship_rect)
 
 				if self.score == 0:
-					self.style.display_high_score(self.save_data)
-					self.style.display_intro_message()
+					self.style.update('intro',self.save_data,self.score)
 				else:
-					self.style.display_high_score(self.save_data)
-					self.style.display_game_over_score(self.score)
+					self.style.update('game_over',self.save_data,self.score)
 				
 			self.crt.draw()
 			pygame.display.flip()

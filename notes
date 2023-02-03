@@ -30,8 +30,9 @@ Refactoring:
 - Add audio and timer classes, remove these responsibilities from GameManager
 
 Things to Add:
+- Allow player to enter initials if they get the high score
 - Figure out how to use increasing score to increase rate of alien and laser spawn
-- Show controls in game
+- Show controls in game (create images with WASD, Spacebar and arrow keys, etc)
 - High score and save
 - Menu and options, allow player to change volume and difficulty
 - Add healthbar, player should explode on death and appear from bottom of screen
