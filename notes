@@ -26,6 +26,9 @@ GameManager vs StateManager:
 - Include a state manager class to manage game_active status (see: https://www.youtube.com/watch?v=j9yMFG3D7fg)
 - Figure out how to integrate this with the game manager class
 
+Refactoring:
+- Add audio and timer classes, remove these responsibilities from GameManager
+
 Things to Add:
 - Figure out how to use increasing score to increase rate of alien and laser spawn
 - Show controls in game
