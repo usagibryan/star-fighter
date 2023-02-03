@@ -4,6 +4,7 @@ import json
 from settings import *
 from animations import BG, Explosion, CRT
 from sprites import Laser, Player, Alien
+from style import Style
 import debug
 
 class GameManager:
@@ -15,8 +16,7 @@ class GameManager:
 		pygame.display.set_caption('Star Fighter')
 		self.clock = pygame.time.Clock()
 		self.game_active = False
-		self.font = pygame.font.Font('font/Pixeled.ttf',20)
-		self.font_color = 'white'
+		self.style = Style(self.screen)
 		self.crt = CRT(self.screen)
 		self.paused = False
 
@@ -24,12 +24,6 @@ class GameManager:
 		self.player_ship = pygame.image.load('graphics/player_ship.png').convert_alpha()
 		self.player_ship = pygame.transform.rotozoom(self.player_ship,0,5)
 		self.player_ship_rect = self.player_ship.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
-
-		self.game_name = self.font.render('STAR FIGHTER',False,(self.font_color))
-		self.game_name_rect = self.game_name.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 - 100))
-
-		self.game_message = self.font.render('PRESS ENTER TO BEGIN',False,(self.font_color))
-		self.game_message_rect = self.game_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 130))
 
 		# Health and Lives
 		self.lives = 3
@@ -82,9 +76,6 @@ class GameManager:
 		self.bg_music = pygame.mixer.Sound('audio/corneria.mp3')
 		self.bg_music.set_volume(1)
 		self.channel_1 = pygame.mixer.Channel(1)
-		
-		# self.laser_sound = pygame.mixer.Sound('../audio/laser.wav')
-		# self.laser_sound.set_volume(0.5)
 
 		self.explosion_sound = pygame.mixer.Sound('audio/explosion.wav')
 		self.explosion_sound.set_volume(0.3)
@@ -101,12 +92,10 @@ class GameManager:
 			random_alien = random.choice(self.aliens.sprites())
 			laser_sprite = Laser(random_alien.rect.center,4,'green',SCREEN_HEIGHT) # 2nd arg is alien laser speed
 			self.alien_lasers.add(laser_sprite)
-			#self.laser_sound.play() replace with quieter or less annoying sound
 
 	def explode(self,x_pos,y_pos):
 		if not self.channel_2.get_busy():
 			self.channel_2.play(self.explosion_sound)
-		# self.explosion_sound.play()
 		self.explosion = Explosion(x_pos,y_pos)
 		self.exploding_sprites.add(self.explosion)
 		self.explosion.explode()
@@ -149,15 +138,6 @@ class GameManager:
 	def score_check(self):
 		if self.score > self.save_data['high_score']:
 			self.save_data['high_score'] = self.score
-			
-	def display_score(self):
-		high_score_surf = pygame.font.Font('font/Pixeled.ttf',10).render(f'HIGH SCORE: {self.save_data["high_score"]}',False,self.font_color)
-		high_score_rect = high_score_surf.get_rect(topleft = (10,5))
-		self.screen.blit(high_score_surf,high_score_rect)
-
-		score_surf = self.font.render(f'SCORE: {self.score}',False,self.font_color)
-		score_rect = score_surf.get_rect(topleft = (10,20))
-		self.screen.blit(score_surf,score_rect)
 
 	def display_lives(self):
 		for live in range(self.lives - 1):
@@ -179,9 +159,7 @@ class GameManager:
 					if event.key == pygame.K_ESCAPE:
 						self.paused = False
 			self.screen.fill((0, 0, 0))
-			pause_text = self.font.render('PAUSED', False, (self.font_color))
-			pause_text_rect = pause_text.get_rect(center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
-			self.screen.blit(pause_text,pause_text_rect)
+			self.style.display_pause_text()
 			pygame.display.update()
 
 	def run(self):
@@ -239,28 +217,22 @@ class GameManager:
 				self.aliens.draw(self.screen)
 				self.alien_lasers.draw(self.screen)
 				self.score_check()
-				self.display_score()
+				self.style.display_in_game_score(self.save_data,self.score)
 				# debug.debug(self.alien_spawn_rate)
 			else:
 				self.channel_1.stop()
 				if self.play_intro_music == True:
 					if not self.channel_0.get_busy():
 						self.channel_0.play(self.intro_music)
+				self.style.display_title()
 				self.screen.blit(self.player_ship,self.player_ship_rect)
 
-
-				high_score_message = self.font.render(f'HIGH SCORE: {self.save_data["high_score"]}',False,(self.font_color))
-				high_score_message_rect = high_score_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 100))
-				score_message = self.font.render(f'YOUR SCORE: {self.score}',False,(self.font_color))
-				score_message_rect = score_message.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2 + 130))
-				self.screen.blit(self.game_name,self.game_name_rect)
-
 				if self.score == 0:
-					self.screen.blit(high_score_message,high_score_message_rect)
-					self.screen.blit(self.game_message,self.game_message_rect)
+					self.style.display_high_score(self.save_data)
+					self.style.display_intro_message()
 				else:
-					self.screen.blit(high_score_message,high_score_message_rect)
-					self.screen.blit(score_message,score_message_rect)
+					self.style.display_high_score(self.save_data)
+					self.style.display_game_over_score(self.score)
 				
 			self.crt.draw()
 			pygame.display.flip()
