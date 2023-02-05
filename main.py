@@ -23,10 +23,9 @@ class GameManager:
 		self.paused = False
 
 		# Health and Lives
-		self.lives = 3
-		self.live_surf = pygame.image.load('graphics/player_ship.png').convert_alpha()
-		self.live_surf = pygame.transform.rotozoom(self.live_surf,0,2)
-		self.live_x_start_pos = SCREEN_WIDTH - (self.live_surf.get_size()[0] * 2 + 20)
+		self.hearts = 3
+		self.heart_surf = pygame.image.load('graphics/undertale_heart.png').convert_alpha()
+		self.heart_x_start_pos = SCREEN_WIDTH - (self.heart_surf.get_size()[0] * 3 + 30)
 
 		# Background Setup
 		self.background = pygame.sprite.Group()
@@ -99,16 +98,16 @@ class GameManager:
 			for laser in self.alien_lasers:
 				if pygame.sprite.spritecollide(laser,self.player,False):
 					laser.kill()
-					self.lives -= 1
-					if self.lives == 2:
+					self.hearts -= 1
+					if self.hearts == 2:
 						if not self.audio.channel_4.get_busy():
 							self.audio.channel_4.play(self.audio.low_health_alarm1)
 						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
-					if self.lives == 1:
+					if self.hearts == 1:
 						if not self.audio.channel_5.get_busy():
 							self.audio.channel_5.play(self.audio.low_health_alarm2)
 						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
-					if self.lives <= 0:
+					if self.hearts <= 0:
 						self.audio.player_down.play()
 						self.aliens.empty()
 						self.game_active = False
@@ -118,16 +117,16 @@ class GameManager:
 		if aliens_crash:
 			for alien in aliens_crash:
 				self.score += alien.value
-			self.lives -= 1
-			if self.lives == 2:
+			self.hearts -= 1
+			if self.hearts == 2:
 				if not self.audio.channel_4.get_busy():
 					self.audio.channel_4.play(self.audio.low_health_alarm1)
 				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
-			if self.lives == 1:
+			if self.hearts == 1:
 				if not self.audio.channel_5.get_busy():
 					self.audio.channel_5.play(self.audio.low_health_alarm2)
 				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
-			if self.lives <= 0:
+			if self.hearts <= 0:
 				self.audio.player_down.play()
 				self.aliens.empty()
 				self.game_active = False
@@ -136,10 +135,10 @@ class GameManager:
 		if self.score > self.save_data['high_score']:
 			self.save_data['high_score'] = self.score
 
-	def display_lives(self):
-		for live in range(self.lives - 1):
-			x = self.live_x_start_pos + (live * (self.live_surf.get_size()[0] + 10))
-			self.screen.blit(self.live_surf,(x,8))
+	def display_hearts(self):
+		for heart in range(self.hearts):
+			x = self.heart_x_start_pos + (heart * (self.heart_surf.get_size()[0] + 10))
+			self.screen.blit(self.heart_surf,(x,8))
 
 	def pause(self):
 		self.paused = not self.paused
@@ -191,7 +190,8 @@ class GameManager:
 					if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
 						self.score = 0
 						self.player.sprite.rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-						self.lives = 3
+						self.hearts = 3
+						self.alien_lasers.empty()
 						self.game_active = True
 
 			self.screen.fill((30,30,30))
@@ -208,7 +208,7 @@ class GameManager:
 
 				self.aliens.update()
 				self.collision_checks()
-				self.display_lives()
+				self.display_hearts()
 
 				self.player.sprite.lasers.draw(self.screen)
 				self.player.draw(self.screen)
