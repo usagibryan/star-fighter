@@ -47,7 +47,7 @@ class GameManager:
 			print('No file created yet')
 
 		# Timers
-		self.alien_spawn_rate = 800 # lower numbers = faster rate of enemy spawn
+		self.alien_spawn_rate = 600 # lower numbers = faster rate of enemy spawn
 		self.alien_spawn_timer = pygame.event.custom_type()
 		pygame.time.set_timer(self.alien_spawn_timer,self.alien_spawn_rate - int(self.score / 10))
 
@@ -200,10 +200,10 @@ class GameManager:
 						self.pause()
 				if self.game_active:
 					if event.type == self.alien_spawn_timer:
-						alien_color = random.choice(['red','red','red','red',
+						alien_color = random.choice(['red','red','red','red','red',
 													 'green','green','green',
-													 'blue','blue',
-													 'yellow'])
+													 'yellow','yellow',
+													 'blue'])
 						self.spawn_aliens(alien_color)
 					if event.type == self.alien_laser_timer:
 						self.alien_shoot()

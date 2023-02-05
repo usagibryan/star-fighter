@@ -100,12 +100,16 @@ class Alien(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect(center = (x_pos,random.randint(-300,-100)))
 
 		# Yellow aliens zigzag
-		self.zigzag_direction = 1 # 1 for right, -1 for left
-		self.zigzag_counter = 0 
+		self.yellow_zigzag_direction = random.choice([-1,1]) # 1 for right, -1 for left
+		self.yellow_zigzag_counter = 0 
+
+		# Blue aliens zigzag
+		self.blue_zigzag_direction = random.choice([-1,1]) # 1 for right, -1 for left
+		self.blue_zigzag_counter = 0 
 
 		if color == 'red': self.value = 100
 		elif color == 'green': self.value = 200
-		elif color == 'blue': self.value = 300
+		elif color == 'yellow': self.value = 300
 		else: self.value = 500
 
 	def destroy(self):
@@ -116,14 +120,22 @@ class Alien(pygame.sprite.Sprite):
 	def update(self):
 		if self.color == 'red': self.rect.y += 1
 		elif self.color == 'green': self.rect.y += 2
-		elif self.color == 'blue': self.rect.y += 3
-		else: # color is yellow
+		elif self.color == 'yellow':
 			self.rect.y += 3
-			self.zigzag_counter += 1
-			if self.zigzag_counter >= 100: # change direction every 100 updates
-				self.zigzag_counter = 0
-				self.zigzag_direction *= -1
-			self.rect.x += self.zigzag_direction * 2
+			self.yellow_zigzag_counter += 1
+			if self.yellow_zigzag_counter >= 100: # change direction every 100 updates
+				self.yellow_zigzag_counter = 0
+				self.yellow_zigzag_direction *= -1
+			self.rect.x += self.yellow_zigzag_direction * 2
 			if self.rect.left < 0 or self.rect.right > self.screen_width:
-				self.zigzag_direction *= -1
+				self.yellow_zigzag_direction *= -1
+		else: # color is blue
+			self.rect.y += 5
+			# self.blue_zigzag_counter += random.randint(1,5)
+			# if self.blue_zigzag_counter >= 600: # change direction every 200 updates
+			# 	self.blue_zigzag_counter = 0
+			# 	self.blue_zigzag_direction *= -1
+			self.rect.x += self.blue_zigzag_direction * 2
+			if self.rect.left < 0 or self.rect.right > self.screen_width:
+				self.blue_zigzag_direction *= -1
 		self.destroy()
