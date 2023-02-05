@@ -64,12 +64,12 @@ class GameManager:
 
 		# Audio
 		self.intro_music = pygame.mixer.Sound('audio/star_fox_controls.mp3')
-		self.intro_music.set_volume(1)
+		self.intro_music.set_volume(.5)
 		self.channel_0 = pygame.mixer.Channel(0)
 		self.play_intro_music = True # Set to False after user begins, only place once
 		
-		self.bg_music = pygame.mixer.Sound('audio/corneria.mp3')
-		self.bg_music.set_volume(1)
+		self.bg_music = pygame.mixer.Sound('audio/star_hero.mp3')
+		self.bg_music.set_volume(1) # very low for some reason
 		self.channel_1 = pygame.mixer.Channel(1)
 
 		self.explosion_sound = pygame.mixer.Sound('audio/explosion.wav')
@@ -77,7 +77,7 @@ class GameManager:
 		self.channel_2 = pygame.mixer.Channel(2)
 
 		self.player_down = pygame.mixer.Sound('audio/player_down.mp3')
-		self.player_down.set_volume(1) # play faster?
+		self.player_down.set_volume(.5) # play faster?
 
 	def spawn_aliens(self,alien_color):
 		self.aliens.add(Alien(alien_color,SCREEN_WIDTH,SCREEN_HEIGHT))

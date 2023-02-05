@@ -35,7 +35,7 @@ class Player(pygame.sprite.Sprite):
 		self.lasers = pygame.sprite.Group()
 
 		self.laser_sound = pygame.mixer.Sound('audio/laser.wav')
-		self.laser_sound.set_volume(0.5)
+		self.laser_sound.set_volume(0.2)
 		self.channel_3 = pygame.mixer.Channel(3)
 
 	def get_input(self):
