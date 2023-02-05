@@ -103,9 +103,10 @@ class Alien(pygame.sprite.Sprite):
 		self.zigzag_direction = 1 # 1 for right, -1 for left
 		self.zigzag_counter = 0 
 
-		if color == 'red': self.value = 100
-		elif color == 'green': self.value = 200
-		else: self.value = 300
+		if color == 'blue': self.value = 100
+		elif color == 'red': self.value = 200
+		elif color == 'green': self.value = 300
+		else: self.value = 500
 
 	def destroy(self):
 		if self.rect.y >= self.screen_height + 50: # added 50 to give the score time to decrease
@@ -113,7 +114,8 @@ class Alien(pygame.sprite.Sprite):
 
 	# numbers round down if decimals are used? .05 doesn't move and 1 is the same as 1.5, etc
 	def update(self):
-		if self.color == 'red': self.rect.y += 1
+		if self.color == 'blue': self.rect.y += 1
+		elif self.color == 'red': self.rect.y += 2
 		elif self.color == 'green': self.rect.y += 3
 		else: # color is yellow
 			self.rect.y += 3

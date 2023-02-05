@@ -30,6 +30,7 @@ Refactoring:
 - Add audio and timer classes, remove these responsibilities from GameManager
 
 Things to Add:
+- Display sprites of aliens on screen with how many points they are worth
 - Allow player to enter initials if they get the high score
 - Figure out how to use increasing score to increase rate of alien and laser spawn
 - Show controls in game (create images with WASD, Spacebar and arrow keys, etc)
