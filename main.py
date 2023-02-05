@@ -76,6 +76,14 @@ class GameManager:
 		self.explosion_sound.set_volume(0.3)
 		self.channel_2 = pygame.mixer.Channel(2)
 
+		self.low_health_alarm1 = pygame.mixer.Sound('audio/sfx_alarm_loop2.wav')
+		self.low_health_alarm1.set_volume(0.3)
+		self.channel_4 = pygame.mixer.Channel(4)
+
+		self.low_health_alarm2 = pygame.mixer.Sound('audio/sfx_alarm_loop1.wav')
+		self.low_health_alarm2.set_volume(0.3)
+		self.channel_5 = pygame.mixer.Channel(5)
+
 		self.player_down = pygame.mixer.Sound('audio/player_down.mp3')
 		self.player_down.set_volume(.5) # play faster?
 
@@ -112,7 +120,14 @@ class GameManager:
 				if pygame.sprite.spritecollide(laser,self.player,False):
 					laser.kill()
 					self.lives -= 1
-					self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+					if self.lives == 2:
+						if not self.channel_4.get_busy():
+							self.channel_4.play(self.low_health_alarm1)
+						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+					if self.lives == 1:
+						if not self.channel_5.get_busy():
+							self.channel_5.play(self.low_health_alarm2)
+						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.lives <= 0:
 						self.player_down.play()
 						self.aliens.empty()
@@ -124,7 +139,14 @@ class GameManager:
 			for alien in aliens_crash:
 				self.score += alien.value
 			self.lives -= 1
-			self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+			if self.lives == 2:
+				if not self.channel_4.get_busy():
+					self.channel_4.play(self.low_health_alarm1)
+				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+			if self.lives == 1:
+				if not self.channel_5.get_busy():
+					self.channel_5.play(self.low_health_alarm2)
+				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.lives <= 0:
 				self.player_down.play()
 				self.aliens.empty()
