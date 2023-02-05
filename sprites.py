@@ -130,10 +130,6 @@ class Alien(pygame.sprite.Sprite):
 				self.yellow_zigzag_direction *= -1
 		else: # color is blue
 			self.rect.y += 5
-			# self.blue_zigzag_counter += random.randint(1,5)
-			# if self.blue_zigzag_counter >= 600: # change direction every 200 updates
-			# 	self.blue_zigzag_counter = 0
-			# 	self.blue_zigzag_direction *= -1
 			self.rect.x += self.blue_zigzag_direction * 2
 			if self.rect.left < 0 or self.rect.right > self.screen_width:
 				self.blue_zigzag_direction *= -1
