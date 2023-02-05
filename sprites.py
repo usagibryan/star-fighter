@@ -101,6 +101,10 @@ class Alien(pygame.sprite.Sprite):
 		self.image = pygame.image.load(file_path).convert_alpha()
 		self.rect = self.image.get_rect(center = (x_pos,random.randint(-300,-100)))
 
+		# Yellow aliens zigzag
+		self.direction = 1 # 1 for right, -1 for left
+		self.counter = 0 
+
 		if color == 'red': self.value = 100
 		elif color == 'green': self.value = 200
 		else: self.value = 300
@@ -112,6 +116,14 @@ class Alien(pygame.sprite.Sprite):
 	# numbers round down if decimals are used? .05 doesn't move and 1 is the same as 1.5, etc
 	def update(self):
 		if self.color == 'red': self.rect.y += 1
-		elif self.color == 'green': self.rect.y += 2
-		else: self.rect.y += 3
+		elif self.color == 'green': self.rect.y += 3
+		else: # color is yellow
+			self.rect.y += 3
+			self.counter += 1
+			if self.counter >= 100: # change direction every 100 updates
+				self.counter = 0
+				self.direction *= -1
+			self.rect.x += self.direction * 2
+			if self.rect.left < 0 or self.rect.right > self.screen_width:
+				self.direction *= -1
 		self.destroy()
