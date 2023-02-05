@@ -1,5 +1,6 @@
 import pygame
 import random
+from settings import *
 
 class Laser(pygame.sprite.Sprite):
 	def __init__(self,pos,speed,color,screen_height):
@@ -20,14 +21,12 @@ class Laser(pygame.sprite.Sprite):
 		self.destroy()
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self,pos,x_constraint,y_constraint,speed):
+	def __init__(self,pos):
 		super().__init__()
 		self.image = pygame.image.load('graphics/player_ship.png').convert_alpha()
-		self.image = pygame.transform.rotozoom(self.image,0,2.5)
+		self.image = pygame.transform.rotozoom(self.image,0,3)
 		self.rect = self.image.get_rect(center = (pos)) # make pos = 400,500?
-		self.speed = speed
-		self.max_x_constraint = x_constraint
-		self.max_y_constraint = y_constraint
+		self.speed = 2
 		self.ready = True
 		self.laser_time = 0
 		self.laser_cooldown = 600 # lower numbers = faster rate of fire
@@ -61,7 +60,6 @@ class Player(pygame.sprite.Sprite):
 			self.shoot_laser()
 			self.ready = False
 			self.laser_time = pygame.time.get_ticks()
-			# self.laser_sound.play()
 			if not self.channel_3.get_busy():
 					self.channel_3.play(self.laser_sound)
 
@@ -74,12 +72,12 @@ class Player(pygame.sprite.Sprite):
 	def constraint(self):
 		if self.rect.left <= 0:
 			self.rect.left = 0
-		if self.rect.right >= self.max_x_constraint:
-			self.rect.right = self.max_x_constraint
+		if self.rect.right >= SCREEN_WIDTH:
+			self.rect.right = SCREEN_WIDTH
 		if self.rect.top <= 0:
 			self.rect.top = 0
-		if self.rect.bottom >= self.max_y_constraint:
-			self.rect.bottom = self.max_y_constraint
+		if self.rect.bottom >= SCREEN_HEIGHT:
+			self.rect.bottom = SCREEN_HEIGHT
 
 	def shoot_laser(self):
 		self.lasers.add(Laser(self.rect.center,-8,'red',self.rect.bottom))

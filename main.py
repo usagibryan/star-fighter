@@ -23,7 +23,7 @@ class GameManager:
 		# Health and Lives
 		self.lives = 3
 		self.live_surf = pygame.image.load('graphics/player_ship.png').convert_alpha()
-		self.live_surf = pygame.transform.rotozoom(self.live_surf,0,0.3)
+		self.live_surf = pygame.transform.rotozoom(self.live_surf,0,2)
 		self.live_x_start_pos = SCREEN_WIDTH - (self.live_surf.get_size()[0] * 2 + 20)
 
 		# Background Setup
@@ -31,7 +31,7 @@ class GameManager:
 		Background(self.background)
 
 		# Player setup
-		player_sprite = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2),SCREEN_WIDTH,SCREEN_HEIGHT,2)
+		player_sprite = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
 		self.player = pygame.sprite.GroupSingle(player_sprite)
 
 		# Score setup
