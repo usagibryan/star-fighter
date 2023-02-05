@@ -1,5 +1,6 @@
 import pygame
 import random
+from audio import Audio
 from settings import *
 
 class Laser(pygame.sprite.Sprite):
@@ -33,9 +34,7 @@ class Player(pygame.sprite.Sprite):
 
 		self.lasers = pygame.sprite.Group()
 
-		self.laser_sound = pygame.mixer.Sound('audio/laser.wav')
-		self.laser_sound.set_volume(0.2)
-		self.channel_3 = pygame.mixer.Channel(3)
+		self.audio = Audio()
 
 	def get_input(self):
 		keys = pygame.key.get_pressed()
@@ -60,8 +59,8 @@ class Player(pygame.sprite.Sprite):
 			self.shoot_laser()
 			self.ready = False
 			self.laser_time = pygame.time.get_ticks()
-			if not self.channel_3.get_busy():
-					self.channel_3.play(self.laser_sound)
+			if not self.audio.channel_3.get_busy():
+					self.audio.channel_3.play(self.audio.laser_sound)
 
 	def recharge(self):
 		if not self.ready:

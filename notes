@@ -27,7 +27,7 @@ GameManager vs StateManager:
 - Figure out how to integrate this with the game manager class
 
 Refactoring:
-- Add audio and timer classes, remove these responsibilities from GameManager
+- Add timer class, remove this responsibility from GameManager
 
 Things to Add:
 - Display sprites of aliens on screen with how many points they are worth

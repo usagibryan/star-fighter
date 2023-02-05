@@ -5,6 +5,7 @@ from settings import *
 from animations import Background, Explosion, CRT
 from sprites import Laser, Player, Alien
 from style import Style
+from audio import Audio
 import debug
 
 class GameManager:
@@ -18,6 +19,7 @@ class GameManager:
 		self.game_active = False
 		self.style = Style(self.screen)
 		self.crt = CRT(self.screen)
+		self.audio = Audio()
 		self.paused = False
 
 		# Health and Lives
@@ -62,30 +64,8 @@ class GameManager:
 		# Explosion setup
 		self.exploding_sprites = pygame.sprite.Group()
 
-		# Audio
-		self.intro_music = pygame.mixer.Sound('audio/star_fox_controls.mp3')
-		self.intro_music.set_volume(.5)
-		self.channel_0 = pygame.mixer.Channel(0)
+		# Audio setup
 		self.play_intro_music = True # Set to False after user begins, only place once
-		
-		self.bg_music = pygame.mixer.Sound('audio/star_hero.mp3')
-		self.bg_music.set_volume(1) # very low for some reason
-		self.channel_1 = pygame.mixer.Channel(1)
-
-		self.explosion_sound = pygame.mixer.Sound('audio/explosion.wav')
-		self.explosion_sound.set_volume(0.3)
-		self.channel_2 = pygame.mixer.Channel(2)
-
-		self.low_health_alarm1 = pygame.mixer.Sound('audio/sfx_alarm_loop2.wav')
-		self.low_health_alarm1.set_volume(0.3)
-		self.channel_4 = pygame.mixer.Channel(4)
-
-		self.low_health_alarm2 = pygame.mixer.Sound('audio/sfx_alarm_loop1.wav')
-		self.low_health_alarm2.set_volume(0.3)
-		self.channel_5 = pygame.mixer.Channel(5)
-
-		self.player_down = pygame.mixer.Sound('audio/player_down.mp3')
-		self.player_down.set_volume(.5) # play faster?
 
 	def spawn_aliens(self,alien_color):
 		self.aliens.add(Alien(alien_color,SCREEN_WIDTH,SCREEN_HEIGHT))
@@ -97,8 +77,8 @@ class GameManager:
 			self.alien_lasers.add(laser_sprite)
 
 	def explode(self,x_pos,y_pos):
-		if not self.channel_2.get_busy():
-			self.channel_2.play(self.explosion_sound)
+		if not self.audio.channel_2.get_busy():
+			self.audio.channel_2.play(self.audio.explosion_sound)
 		self.explosion = Explosion(x_pos,y_pos)
 		self.exploding_sprites.add(self.explosion)
 		self.explosion.explode()
@@ -121,15 +101,15 @@ class GameManager:
 					laser.kill()
 					self.lives -= 1
 					if self.lives == 2:
-						if not self.channel_4.get_busy():
-							self.channel_4.play(self.low_health_alarm1)
+						if not self.audio.channel_4.get_busy():
+							self.audio.channel_4.play(self.audio.low_health_alarm1)
 						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.lives == 1:
-						if not self.channel_5.get_busy():
-							self.channel_5.play(self.low_health_alarm2)
+						if not self.audio.channel_5.get_busy():
+							self.audio.channel_5.play(self.audio.low_health_alarm2)
 						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.lives <= 0:
-						self.player_down.play()
+						self.audio.player_down.play()
 						self.aliens.empty()
 						self.game_active = False
 
@@ -140,15 +120,15 @@ class GameManager:
 				self.score += alien.value
 			self.lives -= 1
 			if self.lives == 2:
-				if not self.channel_4.get_busy():
-					self.channel_4.play(self.low_health_alarm1)
+				if not self.audio.channel_4.get_busy():
+					self.audio.channel_4.play(self.audio.low_health_alarm1)
 				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.lives == 1:
-				if not self.channel_5.get_busy():
-					self.channel_5.play(self.low_health_alarm2)
+				if not self.audio.channel_5.get_busy():
+					self.audio.channel_5.play(self.audio.low_health_alarm2)
 				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.lives <= 0:
-				self.player_down.play()
+				self.audio.player_down.play()
 				self.aliens.empty()
 				self.game_active = False
 
@@ -219,10 +199,10 @@ class GameManager:
 			self.background.draw(self.screen)
 
 			if self.game_active:
-				self.channel_0.stop()
+				self.audio.channel_0.stop()
 				self.play_intro_music = False
-				if not self.channel_1.get_busy():
-					self.channel_1.play(self.bg_music)
+				if not self.audio.channel_1.get_busy():
+					self.audio.channel_1.play(self.audio.bg_music)
 				self.player.update()
 				self.alien_lasers.update()
 
@@ -240,10 +220,10 @@ class GameManager:
 				self.style.update('game_active',self.save_data,self.score)
 				# debug.debug(self.alien_spawn_rate)
 			else:
-				self.channel_1.stop()
+				self.audio.channel_1.stop()
 				if self.play_intro_music == True:
-					if not self.channel_0.get_busy():
-						self.channel_0.play(self.intro_music)
+					if not self.audio.channel_0.get_busy():
+						self.audio.channel_0.play(self.audio.intro_music)
 
 				if self.score == 0:
 					self.style.update('intro',self.save_data,self.score)
