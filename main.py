@@ -200,9 +200,9 @@ class GameManager:
 						self.pause()
 				if self.game_active:
 					if event.type == self.alien_spawn_timer:
-						alien_color = random.choice(['blue','blue','blue','blue',
-													 'red','red','red',
-													 'green','green',
+						alien_color = random.choice(['red','red','red','red',
+													 'green','green','green',
+													 'blue','blue',
 													 'yellow'])
 						self.spawn_aliens(alien_color)
 					if event.type == self.alien_laser_timer:
