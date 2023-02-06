@@ -21,26 +21,24 @@ class Audio():
         self.laser_sound.set_volume(0.3)
         self.channel_3 = pygame.mixer.Channel(3)
 
+        # Low Health Alarms share channel
         self.low_health_alarm1 = pygame.mixer.Sound('audio/sfx_alarm_loop2.wav')
         self.low_health_alarm1.set_volume(0.3)
-        self.channel_4 = pygame.mixer.Channel(4)
-
         self.low_health_alarm2 = pygame.mixer.Sound('audio/sfx_alarm_loop1.wav')
         self.low_health_alarm2.set_volume(0.3)
-        self.channel_5 = pygame.mixer.Channel(5)
+        self.channel_4 = pygame.mixer.Channel(4)
 
         self.ufo_sound = pygame.mixer.Sound('audio/sfx_sound_bling.wav')
         self.ufo_sound.set_volume(1)
-        self.channel_6 = pygame.mixer.Channel(6)
+        self.channel_5 = pygame.mixer.Channel(5)
 
         self.pause_sound = pygame.mixer.Sound('audio/sfx_sounds_pause2_in.wav')
         self.pause_sound.set_volume(1)
-        self.channel_7 = pygame.mixer.Channel(7)
+        self.channel_6 = pygame.mixer.Channel(6)
 
-        # invalid channel index?
-        # self.unpause_sound = pygame.mixer.Sound('audio/sfx_sounds_pause2_out.wav')
-        # self.unpause_sound.set_volume(1)
-        # self.channel_8 = pygame.mixer.Channel(8)
+        self.unpause_sound = pygame.mixer.Sound('audio/sfx_sounds_pause2_out.wav')
+        self.unpause_sound.set_volume(1)
+        self.channel_7 = pygame.mixer.Channel(7)
 
         self.player_down = pygame.mixer.Sound('audio/player_down.mp3')
         self.player_down.set_volume(.5)

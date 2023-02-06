@@ -69,7 +69,7 @@ class GameManager:
 	def spawn_aliens(self,alien_color):
 		self.aliens.add(Alien(alien_color,SCREEN_WIDTH,SCREEN_HEIGHT))
 		if alien_color == 'blue':
-			self.audio.channel_6.play(self.audio.ufo_sound) # causes the game to lag
+			self.audio.channel_5.play(self.audio.ufo_sound) # causes the game to lag
 
 	def alien_shoot(self):
 		if self.aliens.sprites():
@@ -104,7 +104,7 @@ class GameManager:
 						self.audio.channel_4.play(self.audio.low_health_alarm1)
 						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.hearts == 1:
-						self.audio.channel_5.play(self.audio.low_health_alarm2)
+						self.audio.channel_4.play(self.audio.low_health_alarm2)
 						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.hearts <= 0:
 						self.audio.player_down.play()
@@ -121,7 +121,7 @@ class GameManager:
 				self.audio.channel_4.play(self.audio.low_health_alarm1)
 				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.hearts == 1:
-				self.audio.channel_5.play(self.audio.low_health_alarm2)
+				self.audio.channel_4.play(self.audio.low_health_alarm2)
 				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.hearts <= 0:
 				self.audio.player_down.play()
@@ -152,7 +152,7 @@ class GameManager:
 					if event.key == pygame.K_ESCAPE:
 						# self.audio.channel_0.stop() # music not stopping? But restarts on unpause
 						# self.audio.channel_1.stop()
-						# self.audio.channel_8.play(self.audio.unpause_sound) # invalid channel index?
+						self.audio.channel_7.play(self.audio.unpause_sound)
 						self.paused = False
 			self.screen.fill((0, 0, 0))
 			self.style.update('pause',self.save_data,self.score)
@@ -176,7 +176,7 @@ class GameManager:
 					if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
 						pygame.display.toggle_fullscreen()
 					if event.key == pygame.K_ESCAPE:
-						self.audio.channel_7.play(self.audio.pause_sound)
+						self.audio.channel_6.play(self.audio.pause_sound)
 						self.pause()
 				if self.game_active:
 					if event.type == self.alien_spawn_timer:
