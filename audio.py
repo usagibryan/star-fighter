@@ -29,9 +29,12 @@ class Audio():
         self.low_health_alarm2.set_volume(0.3)
         self.channel_5 = pygame.mixer.Channel(5)
 
-        self.ufo_sound = pygame.mixer.Sound('audio/sfx_sound_bling.wav')
-        self.ufo_sound.set_volume(.03)
-        self.channel_6 = pygame.mixer.Channel(6)
+        # game lags when this is called on blue alien spawn
+        # tried in many places, and still lags even if it's not called, too many channels at this point?
+        # too many audio objects created???
+        # self.ufo_sound = pygame.mixer.Sound('audio/sfx_sound_bling.wav')
+        # self.ufo_sound.set_volume(.03)
+        # self.channel_6 = pygame.mixer.Channel(6)
 
         self.player_down = pygame.mixer.Sound('audio/player_down.mp3')
         self.player_down.set_volume(.5)

@@ -118,8 +118,7 @@ class Alien(pygame.sprite.Sprite):
 		self.image = pygame.image.load(file_path).convert_alpha()
 		self.rect = self.image.get_rect(center = (x_pos,random.randint(-300,-100)))
 
-		self.audio = Audio()
-		self.play_ufo_sound = False
+		# self.audio = Audio() # commenting this out eliminated the lag!
 
 		# Yellow aliens zigzag
 		self.yellow_zigzag_direction = random.choice([-1,1]) # 1 for right, -1 for left
