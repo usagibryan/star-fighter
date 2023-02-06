@@ -150,8 +150,8 @@ class GameManager:
 					if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
 						pygame.display.toggle_fullscreen()
 					if event.key == pygame.K_ESCAPE:
-						# self.audio.channel_0.stop() # music not stopping? But restarts on unpause
-						# self.audio.channel_1.stop()
+						self.audio.channel_0.unpause()
+						self.audio.channel_1.unpause()
 						self.audio.channel_7.play(self.audio.unpause_sound)
 						self.paused = False
 			self.screen.fill((0, 0, 0))
@@ -176,6 +176,8 @@ class GameManager:
 					if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
 						pygame.display.toggle_fullscreen()
 					if event.key == pygame.K_ESCAPE:
+						self.audio.channel_0.pause()
+						self.audio.channel_1.pause()
 						self.audio.channel_6.play(self.audio.pause_sound)
 						self.pause()
 				if self.game_active:
