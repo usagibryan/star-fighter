@@ -68,6 +68,8 @@ class GameManager:
 
 	def spawn_aliens(self,alien_color):
 		self.aliens.add(Alien(alien_color,SCREEN_WIDTH,SCREEN_HEIGHT))
+		# if alien_color == 'blue':
+		# 	self.audio.channel_6.play(self.audio.ufo_sound) # causes the game to lag
 
 	def alien_shoot(self):
 		if self.aliens.sprites():
