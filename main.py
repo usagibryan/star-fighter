@@ -68,8 +68,8 @@ class GameManager:
 
 	def spawn_aliens(self,alien_color):
 		self.aliens.add(Alien(alien_color,SCREEN_WIDTH,SCREEN_HEIGHT))
-		# if alien_color == 'blue':
-		# 	self.audio.channel_6.play(self.audio.ufo_sound) # causes the game to lag
+		if alien_color == 'blue':
+			self.audio.channel_6.play(self.audio.ufo_sound) # causes the game to lag
 
 	def alien_shoot(self):
 		if self.aliens.sprites():
@@ -150,6 +150,9 @@ class GameManager:
 					if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
 						pygame.display.toggle_fullscreen()
 					if event.key == pygame.K_ESCAPE:
+						# self.audio.channel_0.stop() # music not stopping? But restarts on unpause
+						# self.audio.channel_1.stop()
+						# self.audio.channel_8.play(self.audio.unpause_sound) # invalid channel index?
 						self.paused = False
 			self.screen.fill((0, 0, 0))
 			self.style.update('pause',self.save_data,self.score)
@@ -173,6 +176,7 @@ class GameManager:
 					if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
 						pygame.display.toggle_fullscreen()
 					if event.key == pygame.K_ESCAPE:
+						self.audio.channel_7.play(self.audio.pause_sound)
 						self.pause()
 				if self.game_active:
 					if event.type == self.alien_spawn_timer:
