@@ -76,8 +76,7 @@ class GameManager:
 			self.alien_lasers.add(laser_sprite)
 
 	def explode(self,x_pos,y_pos):
-		if not self.audio.channel_2.get_busy():
-			self.audio.channel_2.play(self.audio.explosion_sound)
+		self.audio.channel_2.play(self.audio.explosion_sound)
 		self.explosion = Explosion(x_pos,y_pos)
 		self.exploding_sprites.add(self.explosion)
 		self.explosion.explode()
@@ -100,12 +99,10 @@ class GameManager:
 					laser.kill()
 					self.hearts -= 1
 					if self.hearts == 2:
-						if not self.audio.channel_4.get_busy():
-							self.audio.channel_4.play(self.audio.low_health_alarm1)
+						self.audio.channel_4.play(self.audio.low_health_alarm1)
 						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.hearts == 1:
-						if not self.audio.channel_5.get_busy():
-							self.audio.channel_5.play(self.audio.low_health_alarm2)
+						self.audio.channel_5.play(self.audio.low_health_alarm2)
 						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.hearts <= 0:
 						self.audio.player_down.play()
@@ -119,12 +116,10 @@ class GameManager:
 				self.score += alien.value
 			self.hearts -= 1
 			if self.hearts == 2:
-				if not self.audio.channel_4.get_busy():
-					self.audio.channel_4.play(self.audio.low_health_alarm1)
+				self.audio.channel_4.play(self.audio.low_health_alarm1)
 				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.hearts == 1:
-				if not self.audio.channel_5.get_busy():
-					self.audio.channel_5.play(self.audio.low_health_alarm2)
+				self.audio.channel_5.play(self.audio.low_health_alarm2)
 				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.hearts <= 0:
 				self.audio.player_down.play()

@@ -63,8 +63,7 @@ class Player(pygame.sprite.Sprite):
 			self.shoot_laser()
 			self.ready = False
 			self.laser_time = pygame.time.get_ticks()
-			if not self.audio.channel_3.get_busy():
-					self.audio.channel_3.play(self.audio.laser_sound)
+			self.audio.channel_3.play(self.audio.laser_sound)
 
 		# # USB controller input
 		# pygame.joystick.init()
@@ -81,8 +80,7 @@ class Player(pygame.sprite.Sprite):
 		# 			self.shoot_laser()
 		# 			self.ready = False
 		# 			self.laser_time = pygame.time.get_ticks()
-		# 			if not self.audio.channel_3.get_busy():
-		# 					self.audio.channel_3.play(self.audio.laser_sound)
+		# 			self.audio.channel_3.play(self.audio.laser_sound)
 
 	def recharge(self):
 		if not self.ready:
@@ -120,6 +118,9 @@ class Alien(pygame.sprite.Sprite):
 		self.image = pygame.image.load(file_path).convert_alpha()
 		self.rect = self.image.get_rect(center = (x_pos,random.randint(-300,-100)))
 
+		self.audio = Audio()
+		self.play_ufo_sound = False
+
 		# Yellow aliens zigzag
 		self.yellow_zigzag_direction = random.choice([-1,1]) # 1 for right, -1 for left
 		self.yellow_zigzag_counter = 0 
@@ -150,6 +151,7 @@ class Alien(pygame.sprite.Sprite):
 			if self.rect.left < 0 or self.rect.right > self.screen_width:
 				self.yellow_zigzag_direction *= -1
 		else: # color is blue
+			# self.audio.channel_6.play(self.audio.ufo_sound) # this causes the game to lag?
 			self.rect.y += 5
 			self.rect.x += self.blue_zigzag_direction * 2
 			if self.rect.left < 0 or self.rect.right > self.screen_width:
