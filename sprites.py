@@ -66,23 +66,23 @@ class Player(pygame.sprite.Sprite):
 			if not self.audio.channel_3.get_busy():
 					self.audio.channel_3.play(self.audio.laser_sound)
 
-		# USB controller input
-		pygame.joystick.init()
-		joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
+		# # USB controller input
+		# pygame.joystick.init()
+		# joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
 
-		# Xbox USB controller input
-		x_speed = round(pygame.joystick.Joystick(0).get_axis(0))
-		y_speed = round(pygame.joystick.Joystick(0).get_axis(1))
-		self.joystick_move(x_speed,y_speed)
+		# # Xbox USB controller input
+		# x_speed = round(pygame.joystick.Joystick(0).get_axis(0))
+		# y_speed = round(pygame.joystick.Joystick(0).get_axis(1))
+		# self.joystick_move(x_speed,y_speed)
 
-		for event in pygame.event.get():
-			if event.type == pygame.JOYBUTTONDOWN:
-				if pygame.joystick.Joystick(0).get_button(0) and self.ready: # A button shoots the laser
-					self.shoot_laser()
-					self.ready = False
-					self.laser_time = pygame.time.get_ticks()
-					if not self.audio.channel_3.get_busy():
-							self.audio.channel_3.play(self.audio.laser_sound)
+		# for event in pygame.event.get():
+		# 	if event.type == pygame.JOYBUTTONDOWN:
+		# 		if pygame.joystick.Joystick(0).get_button(0) and self.ready: # A button shoots the laser
+		# 			self.shoot_laser()
+		# 			self.ready = False
+		# 			self.laser_time = pygame.time.get_ticks()
+		# 			if not self.audio.channel_3.get_busy():
+		# 					self.audio.channel_3.play(self.audio.laser_sound)
 
 	def recharge(self):
 		if not self.ready:
