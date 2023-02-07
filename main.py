@@ -77,7 +77,7 @@ class GameManager:
 	def alien_shoot(self):
 		if self.aliens.sprites():
 			random_alien = random.choice(self.aliens.sprites())
-			laser_sprite = Laser(random_alien.rect.center,4,'red') # 2nd arg is alien laser speed
+			laser_sprite = Laser(random_alien.rect.center,4,'yellow','white') # 2nd arg is alien laser speed
 			self.alien_lasers.add(laser_sprite)
 
 	def explode(self,x_pos,y_pos):
