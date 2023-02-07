@@ -165,7 +165,6 @@ class GameManager:
 		last_time = time.time()
 		while True:
 			# print(str(self.clock.get_fps())) # use debug to print this?
-			# delta time (scrolling background breaks without delta time?)
 			dt = time.time() - last_time
 			last_time = time.time()
 
@@ -231,7 +230,6 @@ class GameManager:
 				self.alien_lasers.draw(self.screen)
 				self.score_check()
 				self.style.update('game_active',self.save_data,self.score)
-				# debug.debug(self.alien_spawn_rate)
 			else:
 				self.audio.channel_1.stop()
 				if self.play_intro_music == True:

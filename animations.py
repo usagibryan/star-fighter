@@ -18,10 +18,10 @@ class Background(pygame.sprite.Sprite):
 		self.pos = pygame.math.Vector2(self.rect.bottomleft)
 
 	def update(self,dt):
-		self.pos.y += 50 * dt # Scrolling background breaks without delta time formula?
+		self.pos.y += 50 * dt
 		if self.rect.top >= 0:
 			self.pos.y = -self.image.get_height() / 2
-		self.rect.y = round(self.pos.y) # Understand this before you can simplify it
+		self.rect.y = round(self.pos.y)
 
 class Explosion(pygame.sprite.Sprite):
 	def __init__(self, pos_x, pos_y):
