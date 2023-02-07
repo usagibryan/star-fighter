@@ -111,7 +111,7 @@ class GameManager:
 						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 						self.audio.channel_1.pause()
 						self.player_alive = False
-						pygame.time.set_timer(self.player_death_timer,1000)
+						pygame.time.set_timer(self.player_death_timer,500)
 
 		# when an alien and the player collide
 		aliens_crash = pygame.sprite.spritecollide(self.player.sprite,self.aliens,True)
@@ -129,7 +129,7 @@ class GameManager:
 				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 				self.audio.channel_1.pause()
 				self.player_alive = False
-				pygame.time.set_timer(self.player_death_timer,1000)
+				pygame.time.set_timer(self.player_death_timer,500)
 
 	def score_check(self):
 		if self.score > self.save_data['high_score']:

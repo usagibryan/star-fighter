@@ -110,8 +110,8 @@ class Player(pygame.sprite.Sprite):
 		self.lasers.add(Laser(self.rect.center,-8,'cyan','white'))
 
 		# Twin Lasers
-		# self.lasers.add(Laser(((self.rect.center[0] - 12),self.rect.center[1]),-8,self.laser_color))
-		# self.lasers.add(Laser(((self.rect.center[0] + 12),self.rect.center[1]),-8,self.laser_color))
+		# self.lasers.add(Laser(((self.rect.center[0] - 12),self.rect.center[1]),-8,'cyan','white'))
+		# self.lasers.add(Laser(((self.rect.center[0] + 12),self.rect.center[1]),-8,'cyan','white'))
 
 	def update(self):
 		self.get_input()
