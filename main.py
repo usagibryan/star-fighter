@@ -22,7 +22,7 @@ class GameManager:
 		self.audio = Audio()
 		self.paused = False
 
-		# Health and Lives
+		# Player Health
 		self.hearts = 3
 		self.heart_surf = pygame.image.load('graphics/undertale_heart.png').convert_alpha()
 		self.heart_x_start_pos = SCREEN_WIDTH - (self.heart_surf.get_size()[0] * 3 + 30)
@@ -34,6 +34,7 @@ class GameManager:
 		# Player setup
 		player_sprite = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
 		self.player = pygame.sprite.GroupSingle(player_sprite)
+		self.player_alive = True
 
 		# Score setup
 		self.score = 0
@@ -50,11 +51,13 @@ class GameManager:
 		# Timers
 		self.alien_spawn_rate = 600 # lower numbers = faster rate of enemy spawn
 		self.alien_spawn_timer = pygame.event.custom_type()
-		pygame.time.set_timer(self.alien_spawn_timer,self.alien_spawn_rate - int(self.score / 10))
+		pygame.time.set_timer(self.alien_spawn_timer,self.alien_spawn_rate)
 
 		self.alien_laser_rate = 400 # lower numbers = more lasers
 		self.alien_laser_timer = pygame.event.custom_type()
-		pygame.time.set_timer(self.alien_laser_timer,self.alien_laser_rate - int(self.score / 10))
+		pygame.time.set_timer(self.alien_laser_timer,self.alien_laser_rate)
+
+		self.player_death_timer = pygame.event.custom_type()
 
 		# Alien setup
 		self.aliens = pygame.sprite.Group()
@@ -102,31 +105,31 @@ class GameManager:
 					self.hearts -= 1
 					if self.hearts == 2:
 						self.audio.channel_4.play(self.audio.low_health_alarm1)
-						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.hearts == 1:
 						self.audio.channel_4.play(self.audio.low_health_alarm2)
-						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 					if self.hearts <= 0:
-						self.audio.player_down.play()
-						self.aliens.empty()
-						self.game_active = False
+						self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+						self.audio.channel_1.pause()
+						self.player_alive = False
+						pygame.time.set_timer(self.player_death_timer,1000)
 
 		# when an alien and the player collide
 		aliens_crash = pygame.sprite.spritecollide(self.player.sprite,self.aliens,True)
 		if aliens_crash:
 			for alien in aliens_crash:
 				self.score += alien.value
+				if self.hearts > 1:
+					self.explode(alien.rect.x - 25,alien.rect.y - 25)
 			self.hearts -= 1
 			if self.hearts == 2:
 				self.audio.channel_4.play(self.audio.low_health_alarm1)
-				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.hearts == 1:
 				self.audio.channel_4.play(self.audio.low_health_alarm2)
-				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
 			if self.hearts <= 0:
-				self.audio.player_down.play()
-				self.aliens.empty()
-				self.game_active = False
+				self.explode(self.player.sprite.rect.x - 25,self.player.sprite.rect.y - 25)
+				self.audio.channel_1.pause()
+				self.player_alive = False
+				pygame.time.set_timer(self.player_death_timer,1000)
 
 	def score_check(self):
 		if self.score > self.save_data['high_score']:
@@ -189,12 +192,18 @@ class GameManager:
 						self.spawn_aliens(alien_color)
 					if event.type == self.alien_laser_timer:
 						self.alien_shoot()
+					if event.type == self.player_death_timer:
+						self.audio.player_down.play()
+						self.aliens.empty()
+						self.game_active = False
+						pygame.time.set_timer(self.player_death_timer,0)
 				else:
 					if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
 						self.score = 0
 						self.player.sprite.rect.center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 						self.hearts = 3
 						self.alien_lasers.empty()
+						self.player_alive = True
 						self.game_active = True
 
 			self.screen.fill((30,30,30))
@@ -214,7 +223,8 @@ class GameManager:
 				self.display_hearts()
 
 				self.player.sprite.lasers.draw(self.screen)
-				self.player.draw(self.screen)
+				if self.player_alive:
+					self.player.draw(self.screen)
 				self.exploding_sprites.draw(self.screen)
 				self.exploding_sprites.update(0.15) # smaller numbers = slower explosion animation. Always 0.x
 				self.aliens.draw(self.screen)
