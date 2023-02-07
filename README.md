@@ -7,7 +7,7 @@ To play Star Fighter you must have [Python](https://www.python.org/) and [Pygame
 I started learning Pygame using [Clear Code's Tutorials](https://www.youtube.com/@ClearCode) and strongly recommend starting with [The ultimate introduction to Pygame](https://www.youtube.com/watch?v=AY9MnQ4x3zk) if you are interested in learning how to make games in Pygame.
 
 ## How to Play
-Your ship starts at the center of the screen. You can move in four directions and fire upwards. There is a short cooldown timer between each shot so aim carefully. You have three hearts and if you get hit by a laser or crash into an alien ship you will take damage and lose these hearts. If you lose three hearts it's game over. Try to get the high score.
+Your ship starts at the center of the screen. You can move in four directions and fire upwards. There is a short cooldown timer between each shot so aim carefully. You have three hearts and if you get hit by a laser or crash into an alien ship you will take damage and lose these hearts. If you lose three hearts it's game over and your score is reset. Try to get the high score.
 
 ## Controls
 * **WASD** or **Arrow Keys** to move
@@ -26,7 +26,7 @@ Each alien sprite behaves differently and is worth a different score value based
 # Personal Notes
 
 ## Issues That Need to be Fixed
-* Player ship sprite can still move and shoot lasers upon death
+* Player ship sprite can still move and shoot lasers briefly after death
 * Explosion animation sprites are not transparent?
 
 ## Ideas for Future Changes and Additions
