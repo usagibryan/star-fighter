@@ -4,14 +4,14 @@ from audio import Audio
 from settings import *
 
 class Laser(pygame.sprite.Sprite):
-	def __init__(self,pos,speed,color,screen_height):
+	def __init__(self,pos,speed,color):
 		super().__init__()
 		self.image = pygame.Surface((4,20))
 		self.color = color
 		self.image.fill(self.color)
 		self.rect = self.image.get_rect(center = pos)
 		self.speed = speed
-		self.height_y_constraint = screen_height
+		self.height_y_constraint = SCREEN_HEIGHT
 
 	def destroy(self):
 		if self.rect.y <= -50 or self.rect.y >= self.height_y_constraint + 50:
@@ -31,6 +31,7 @@ class Player(pygame.sprite.Sprite):
 		self.ready = True
 		self.laser_time = 0
 		self.laser_cooldown = 600 # lower numbers = faster rate of fire
+		self.laser_color = 'green'
 
 		self.lasers = pygame.sprite.Group()
 
@@ -99,7 +100,12 @@ class Player(pygame.sprite.Sprite):
 			self.rect.bottom = SCREEN_HEIGHT
 
 	def shoot_laser(self):
-		self.lasers.add(Laser(self.rect.center,-8,'red',self.rect.bottom))
+		# Single Laser
+		self.lasers.add(Laser(self.rect.center,-8,self.laser_color))
+
+		# Twin Lasers
+		# self.lasers.add(Laser(((self.rect.center[0] - 12),self.rect.center[1]),-8,self.laser_color))
+		# self.lasers.add(Laser(((self.rect.center[0] + 12),self.rect.center[1]),-8,self.laser_color))
 
 	def update(self):
 		self.get_input()
