@@ -1,2 +1,3 @@
 # Star Fighter
-Vertically scrolling space shooter I'm creating based on using what I've learned with Pygame so far
+
+This is a vertically scrolling space themed shmup (or Shoot'em up) created using the Pygame module in Python.
