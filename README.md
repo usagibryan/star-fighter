@@ -9,27 +9,27 @@ I started learning Pygame using [Clear Code's Tutorials](https://www.youtube.com
 ## How to Play
 Your ship starts at the center of the screen. You can move in four directions and fire upwards. There is a short cooldown timer between each shot so aim carefully. You have three hearts and if you get hit by a laser or crash into an alien ship you will take damage and lose these hearts. If you lose three hearts it's game over and your score is reset. Try to get the high score.
 
-## Controls
+### Controls
 * **WASD** or **Arrow Keys** to move
 * **Spacebar** to shoot laser
 * Hold **F** key to move twice as fast
 * **ALT + ENTER** to toggle full screen
 * **ESC** to pause
 
-## Enemy Aliens
+### Enemy Aliens
 Each alien sprite behaves differently and is worth a different score value based on color:
 * Red - Slow - **100 Points**
 * Green - Moderate Speed - **200 Points**
 * Yellow - Fast - Moves in a Zigzag Pattern - **300 Points**
 * Blue - Very Fast and Rare - **500 Points**
 
-# Personal Notes
+## Personal Notes
 
-## Issues That Need to be Fixed
+### Issues That Need to be Fixed
 * Player ship sprite can still move and shoot lasers briefly after death
 * Explosion animation sprites are not transparent?
 
-## Ideas for Future Changes and Additions
+### Ideas for Future Changes and Additions
 * Add twin laser powerup
 * Display sprites of aliens on screen with how many points they are worth
 * Allow player to enter initials if they get the high score
@@ -43,15 +43,15 @@ Each alien sprite behaves differently and is worth a different score value based
 * Multiple levels/stages?
 * Speed boost that uses energy?
 
-## Asset Changes to Make
+### Asset Changes to Make
 * Replace Galaga ship with original player sprite
 * Replace Space Invaders with original enemy sprites
 * Replace placeholder music with original music
 
-## Refactoring Changes to Make
+### Refactoring Changes to Make
 * Add timer class, remove this responsibility from GameManager
 * Include a [state manager class](https://www.youtube.com/watch?v=j9yMFG3D7fg) to manage game_active status. Figure out how to integrate this with the game manager class
 
-## Misc Notes
+### Misc Notes
 * Use `channel_#.play(music, -1)` to loop instead?
 * Try [pygame.mixer.music](https://www.pygame.org/docs/ref/music.html) instead of the sound class for music, gives more control like queue music.
