@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
 	def __init__(self,pos):
 		super().__init__()
 		self.image = pygame.image.load('graphics/player_ship.png').convert_alpha()
-		self.image = pygame.transform.rotozoom(self.image,0,3)
+		self.image = pygame.transform.rotozoom(self.image,0,0.15)
 		self.rect = self.image.get_rect(center = (pos)) # make pos = 400,500?
 		self.speed = 2
 		self.ready = True

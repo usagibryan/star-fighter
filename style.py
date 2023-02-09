@@ -12,7 +12,7 @@ class Style():
 
         # Load image of ship for intro and game over screens
         self.player_ship = pygame.image.load('graphics/player_ship.png').convert_alpha()
-        self.player_ship = pygame.transform.rotozoom(self.player_ship,0,5)
+        self.player_ship = pygame.transform.rotozoom(self.player_ship,0,0.2)
         self.player_ship_rect = self.player_ship.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
 
     # Displays the title on the intro and game over screens
