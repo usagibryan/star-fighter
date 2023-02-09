@@ -1,4 +1,4 @@
-# Star Fighter <img src="https://github.com/usagibryan/star_fighter/blob/main/graphics/player_ship.png" width="32" height="32">
+# Star Fighter <img src="https://github.com/usagibryan/star_fighter/blob/main/graphics/player_ship.png" height="32">
 
 This is a vertically scrolling space themed shmup (or Shoot'em up) that I am creating using the Pygame module in Python. This is the first game I ever made and the first program I've written of this size and scope. I am continuously changing and adding to this game as I learn more.
 
