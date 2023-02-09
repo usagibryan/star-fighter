@@ -23,6 +23,11 @@ Each alien sprite behaves differently and is worth a different score value based
 * <img src="https://github.com/usagibryan/star_fighter/blob/main/graphics/yellow.png" width="20" height="16"> Fast - Moves in a Zigzag Pattern - **300 Points**
 * <img src="https://github.com/usagibryan/star_fighter/blob/main/graphics/blue.png" width="20" height="10"> Very Fast and Rare - **500 Points**
 
+### Assets
+* "Space Invader" sprites and CRT graphics by [Clear Code](https://opengameart.org/content/assets-for-a-space-invader-like-game)
+* Player ship sprite from [https://opengameart.org/content/top-down-spaceships]([https://en.wikipedia.org/wiki/Galaga](https://opengameart.org/content/top-down-spaceships)) by arin48
+* Heart sprite from Undertale by Toby Fox
+
 ## Personal Notes
 
 ### Issues That Need to be Fixed
@@ -46,14 +51,13 @@ Each alien sprite behaves differently and is worth a different score value based
 * Multiple levels/stages?
 * Speed boost that uses energy?
 
-### Asset Changes to Make
-* Replace Galaga ship with original player sprite
-* Replace Space Invaders with original enemy sprites
-* Replace placeholder music with original music
-
 ### Refactoring Changes to Make
 * Add timer class, remove this responsibility from GameManager
 * Include a [state manager class](https://www.youtube.com/watch?v=j9yMFG3D7fg) to manage game_active status. Figure out how to integrate this with the game manager class
+
+### Asset Changes to Make
+* Replace player and enemy sprites with original art
+* Replace placeholder music with original music
 
 ### Misc Notes
 * Use `channel_#.play(music, -1)` to loop instead?
