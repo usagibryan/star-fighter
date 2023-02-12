@@ -44,3 +44,5 @@ class Audio():
 
         self.player_down = pygame.mixer.Sound('audio/player_down.mp3')
         self.player_down.set_volume(.5 * self.master_volume)
+        
+        # test sync
