@@ -164,7 +164,8 @@ class GameManager:
 	def run(self):
 		last_time = time.time()
 		while True:
-			print(self.audio.master_volume)
+			print(f'Master VOlume: {self.audio.master_volume}')
+			print(f'Laser: {self.audio.laser_sound.get_volume()}')
 			dt = time.time() - last_time
 			last_time = time.time()
 
