@@ -44,3 +44,15 @@ class Audio():
 
         self.player_down = pygame.mixer.Sound('audio/player_down.mp3')
         self.player_down.set_volume(.5 * self.master_volume)
+
+    def update(self):
+        self.intro_music.set_volume(.5 * self.master_volume)
+        self.bg_music.set_volume(1 * self.master_volume)
+        self.explosion_sound.set_volume(0.3 * self.master_volume)
+        self.laser_sound.set_volume(0.3 * self.master_volume)
+        self.low_health_alarm1.set_volume(0.3 * self.master_volume)
+        self.low_health_alarm2.set_volume(0.3 * self.master_volume)
+        self.ufo_sound.set_volume(1 * self.master_volume)
+        self.pause_sound.set_volume(1 * self.master_volume)
+        self.unpause_sound.set_volume(1 * self.master_volume)
+        self.player_down.set_volume(.5 * self.master_volume)
