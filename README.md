@@ -10,11 +10,12 @@ I started learning Pygame using [Clear Code's Tutorials](https://www.youtube.com
 Your ship starts at the center of the screen. You can move in four directions and fire upwards. There is a short cooldown timer between each shot so aim carefully. You have three hearts and if you get hit by a laser or crash into an alien ship you will take damage and lose these hearts. If you lose three hearts it's game over and your score is reset. Try to get the high score.
 
 ### Controls
-* **WASD** or **Arrow Keys** to move
-* **Spacebar** to shoot laser
+* **WASD** or **Arrow Keys** moves the player ship
+* **Spacebar** fires the laser
 * Hold **F** key to move twice as fast
-* **ALT + ENTER** to toggle full screen
-* **ESC** to pause
+* **ALT + ENTER** toggles full screen mode
+* **ESC** pauses and unpauses the game
+* **+** and **-** keys increase and decrease the volume
 
 ### Enemy Aliens
 Each alien sprite behaves differently and is worth a different score value based on color:
@@ -31,7 +32,6 @@ Each alien sprite behaves differently and is worth a different score value based
 ## Personal Notes
 
 ### Issues That Need to be Fixed
-* Laser volume does not change with other audio?
 * Player ship sprite can still move and shoot lasers briefly after death
 * Explosion animation sprites are not transparent?
 * Windows flags exe made with Pyinstaller as a virus... [try this.](https://plainenglish.io/blog/pyinstaller-exe-false-positive-trojan-virus-resolved-b33842bd3184)
@@ -44,7 +44,8 @@ Each alien sprite behaves differently and is worth a different score value based
 * Allow player to enter initials if they get the high score
 * Figure out how to use increasing score to increase rate of alien and laser spawn
 * Show controls in game (create images with WASD, Spacebar and arrow keys, etc)
-* Menu and options, allow player to change volume and difficulty via master volume
+* Menu and options
+* Add volume bar
 * Get extra hearts, maybe items that float down or reward for high score?
 * Quit game option
 * Enemy animations

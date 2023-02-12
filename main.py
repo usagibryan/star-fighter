@@ -32,7 +32,7 @@ class GameManager:
 		Background(self.background)
 
 		# Player setup
-		player_sprite = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
+		player_sprite = Player((SCREEN_WIDTH/2,SCREEN_HEIGHT/2),self.audio)
 		self.player = pygame.sprite.GroupSingle(player_sprite)
 		self.player_alive = True
 
@@ -164,8 +164,6 @@ class GameManager:
 	def run(self):
 		last_time = time.time()
 		while True:
-			print(f'Master VOlume: {self.audio.master_volume}')
-			print(f'Laser: {self.audio.laser_sound.get_volume()}')
 			dt = time.time() - last_time
 			last_time = time.time()
 

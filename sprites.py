@@ -1,6 +1,5 @@
 import pygame
 import random
-from audio import Audio
 from settings import *
 
 class Laser(pygame.sprite.Sprite):
@@ -29,7 +28,7 @@ class Laser(pygame.sprite.Sprite):
 		self.destroy()
 
 class Player(pygame.sprite.Sprite):
-	def __init__(self,pos):
+	def __init__(self,pos,audio):
 		super().__init__()
 		self.image = pygame.image.load('graphics/player_ship.png').convert_alpha()
 		self.image = pygame.transform.rotozoom(self.image,0,0.15)
@@ -41,7 +40,7 @@ class Player(pygame.sprite.Sprite):
 
 		self.lasers = pygame.sprite.Group()
 
-		self.audio = Audio()
+		self.audio = audio
 
 	def joystick_move(self,x_speed,y_speed):
 		self.rect.move_ip(x_speed,y_speed)
