@@ -17,10 +17,11 @@ class GameManager:
 		pygame.display.set_caption('Star Fighter')
 		self.clock = pygame.time.Clock()
 		self.game_active = False
-		self.style = Style(self.screen)
 		self.crt = CRT(self.screen)
 		self.audio = Audio()
+		self.style = Style(self.screen,self.audio)
 		self.paused = False
+		self.show_volume = False
 
 		# Player Health
 		self.hearts = 3
@@ -58,6 +59,7 @@ class GameManager:
 		pygame.time.set_timer(self.alien_laser_timer,self.alien_laser_rate)
 
 		self.player_death_timer = pygame.event.custom_type()
+		self.volume_display_timer = pygame.event.custom_type()
 
 		# Alien setup
 		self.aliens = pygame.sprite.Group()
@@ -185,10 +187,17 @@ class GameManager:
 						self.audio.master_volume += 0.1
 						self.audio.master_volume = min(self.audio.master_volume, 1.0)
 						self.audio.update()
+						pygame.time.set_timer(self.volume_display_timer,1000)
+						self.show_volume = True
 					elif event.key == pygame.K_KP_MINUS or event.key == pygame.K_MINUS:
 						self.audio.master_volume -= 0.1
 						self.audio.master_volume = max(self.audio.master_volume, 0.0)
 						self.audio.update()
+						pygame.time.set_timer(self.volume_display_timer,1000)
+						self.show_volume = True
+				if event.type == self.volume_display_timer:
+					self.show_volume = False
+					pygame.time.set_timer(self.volume_display_timer,0)
 				if self.game_active:
 					if event.type == self.alien_spawn_timer:
 						alien_color = random.choice(['red','red','red','red','red',
@@ -215,6 +224,8 @@ class GameManager:
 			self.screen.fill((30,30,30))
 			self.background.update(dt)
 			self.background.draw(self.screen)
+			if self.show_volume:
+				self.style.display_volume()
 
 			if self.game_active:
 				self.audio.channel_0.stop()

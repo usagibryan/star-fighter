@@ -2,7 +2,7 @@ import pygame
 from settings import *
 
 class Style():
-    def __init__(self,screen):
+    def __init__(self,screen,audio):
         super().__init__() # why is this necessary?
         self.screen = screen
         self.small_font = pygame.font.Font('font/Pixeled.ttf',10)
@@ -14,6 +14,9 @@ class Style():
         self.player_ship = pygame.image.load('graphics/player_ship.png').convert_alpha()
         self.player_ship = pygame.transform.rotozoom(self.player_ship,0,0.2)
         self.player_ship_rect = self.player_ship.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
+
+        # Needed to display the volume
+        self.audio = audio
 
     # Displays the title on the intro and game over screens
     def display_title(self):
@@ -70,6 +73,11 @@ class Style():
         pause_text = self.medium_font.render('PAUSED', False, (self.font_color))
         pause_text_rect = pause_text.get_rect(center = (SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
         self.screen.blit(pause_text,pause_text_rect)
+
+    def display_volume(self):
+        volume_message = self.small_font.render(f'VOLUME: {round(self.audio.master_volume * 10)}',False,(self.font_color))
+        volume_message_rect = volume_message.get_rect(bottomleft = (10,SCREEN_HEIGHT - 10))
+        self.screen.blit(volume_message,volume_message_rect)
 
     def update(self,game_state,save_data,score):
         self.game_state = game_state
