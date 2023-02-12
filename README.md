@@ -31,6 +31,7 @@ Each alien sprite behaves differently and is worth a different score value based
 ## Personal Notes
 
 ### Issues That Need to be Fixed
+* Laser volume does not change with other audio?
 * Player ship sprite can still move and shoot lasers briefly after death
 * Explosion animation sprites are not transparent?
 * Windows flags exe made with Pyinstaller as a virus... [try this.](https://plainenglish.io/blog/pyinstaller-exe-false-positive-trojan-virus-resolved-b33842bd3184)
