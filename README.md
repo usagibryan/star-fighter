@@ -43,7 +43,7 @@ Each alien sprite behaves differently and is worth a different score value based
 * Allow player to enter initials if they get the high score
 * Figure out how to use increasing score to increase rate of alien and laser spawn
 * Show controls in game (create images with WASD, Spacebar and arrow keys, etc)
-* Menu and options, allow player to change volume and difficulty
+* Menu and options, allow player to change volume and difficulty via master volume
 * Get extra hearts, maybe items that float down or reward for high score?
 * Quit game option
 * Enemy animations
