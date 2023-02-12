@@ -164,6 +164,7 @@ class GameManager:
 	def run(self):
 		last_time = time.time()
 		while True:
+			print(self.audio.master_volume)
 			dt = time.time() - last_time
 			last_time = time.time()
 
@@ -181,14 +182,14 @@ class GameManager:
 						self.audio.channel_1.pause()
 						self.audio.channel_6.play(self.audio.pause_sound)
 						self.pause()
-					# if event.key == pygame.K_KP_PLUS or event.key == pygame.K_EQUALS:
-					# 	self.audio.master_volume += 0.1
-					# 	self.audio.master_volume = min(self.audio.master_volume, 1.0)
-					# 	self.audio.update()
-					# elif event.key == pygame.K_KP_MINUS or event.key == pygame.K_MINUS:
-					# 	self.audio.master_volume -= 0.1
-					# 	self.audio.master_volume = max(self.audio.master_volume, 0.0)
-					# 	self.audio.update()
+					if event.key == pygame.K_KP_PLUS or event.key == pygame.K_EQUALS:
+						self.audio.master_volume += 0.1
+						self.audio.master_volume = min(self.audio.master_volume, 1.0)
+						self.audio.update()
+					elif event.key == pygame.K_KP_MINUS or event.key == pygame.K_MINUS:
+						self.audio.master_volume -= 0.1
+						self.audio.master_volume = max(self.audio.master_volume, 0.0)
+						self.audio.update()
 				if self.game_active:
 					if event.type == self.alien_spawn_timer:
 						alien_color = random.choice(['red','red','red','red','red',
