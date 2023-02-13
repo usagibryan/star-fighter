@@ -10,13 +10,21 @@ class Style():
         self.large_font = pygame.font.Font('font/Pixeled.ttf',30)
         self.font_color = 'white'
 
+        # Needed to display the volume
+        self.audio = audio
+
+        # Volume Bar
+        self.volume_bar = pygame.Surface((40,40))
+        self.volume_bar.fill((240,240,240))
+        self.volume_bar_rect = self.volume_bar.get_rect(center = (400,400))
+        self.maximum_volume = 1000
+        self.volume_bar_length = 150
+        self.volume_bar_ratio = self.maximum_volume / self.volume_bar_length
+
         # Load image of ship for intro and game over screens
         self.player_ship = pygame.image.load('graphics/player_ship.png').convert_alpha()
         self.player_ship = pygame.transform.rotozoom(self.player_ship,0,0.2)
         self.player_ship_rect = self.player_ship.get_rect(center = (SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
-
-        # Needed to display the volume
-        self.audio = audio
 
     # Displays the title on the intro and game over screens
     def display_title(self):
@@ -75,9 +83,13 @@ class Style():
         self.screen.blit(pause_text,pause_text_rect)
 
     def display_volume(self):
+        # Volume Number
         volume_message = self.small_font.render(f'VOLUME: {round(self.audio.master_volume * 10)}',False,(self.font_color))
-        volume_message_rect = volume_message.get_rect(bottomleft = (10,SCREEN_HEIGHT - 10))
+        volume_message_rect = volume_message.get_rect(bottomleft = (10,SCREEN_HEIGHT - 20))
         self.screen.blit(volume_message,volume_message_rect)
+        
+        # Volume Bar
+        pygame.draw.rect(self.screen,'green',(10,SCREEN_HEIGHT - 20,(self.audio.master_volume*1000)/self.volume_bar_ratio,10))
 
     def update(self,game_state,save_data,score):
         self.game_state = game_state
