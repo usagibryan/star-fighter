@@ -9,6 +9,7 @@ from audio import Audio
 import debug
 
 class GameManager:
+    """Main game manager class"""
     def __init__(self):
 
         # Game setup
@@ -166,7 +167,7 @@ class GameManager:
     def run(self):
         last_time = time.time()
         while True:
-            dt = time.time() - last_time
+            delta_time = time.time() - last_time
             last_time = time.time()
 
             for event in pygame.event.get():
@@ -222,7 +223,7 @@ class GameManager:
                         self.game_active = True
 
             self.screen.fill((30,30,30))
-            self.background.update(dt)
+            self.background.update(delta_time)
             self.background.draw(self.screen)
             if self.show_volume:
                 self.style.display_volume()
@@ -243,14 +244,17 @@ class GameManager:
                 if self.player_alive:
                     self.player.draw(self.screen)
                 self.exploding_sprites.draw(self.screen)
-                self.exploding_sprites.update(0.15) # smaller numbers = slower explosion animation. Always 0.x
+
+                # smaller numbers = slower explosion animation. Always 0.x
+                self.exploding_sprites.update(0.15)
+
                 self.aliens.draw(self.screen)
                 self.alien_lasers.draw(self.screen)
                 self.score_check()
                 self.style.update('game_active',self.save_data,self.score)
             else:
                 self.audio.channel_1.stop()
-                if self.play_intro_music == True:
+                if self.play_intro_music:
                     if not self.audio.channel_0.get_busy():
                         self.audio.channel_0.play(self.audio.intro_music)
 
@@ -258,7 +262,7 @@ class GameManager:
                     self.style.update('intro',self.save_data,self.score)
                 else:
                     self.style.update('game_over',self.save_data,self.score)
-                
+
             self.crt.draw()
             pygame.display.flip()
             self.clock.tick(FRAMERATE)

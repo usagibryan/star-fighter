@@ -4,6 +4,7 @@ from settings import *
 
 # see https://www.youtube.com/watch?v=VUFvY349ess for more details
 class Background(pygame.sprite.Sprite):
+    """Creates a scrolling space themed background"""
     def __init__(self,groups):
         super().__init__(groups)
         bg_image = pygame.image.load('graphics/background.png').convert()
@@ -17,13 +18,14 @@ class Background(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(bottomleft = (0,SCREEN_HEIGHT))
         self.pos = pygame.math.Vector2(self.rect.bottomleft)
 
-    def update(self,dt):
-        self.pos.y += 50 * dt
+    def update(self,delta_time):
+        self.pos.y += 50 * delta_time
         if self.rect.top >= 0:
             self.pos.y = -self.image.get_height() / 2
         self.rect.y = round(self.pos.y)
 
 class Explosion(pygame.sprite.Sprite):
+    """Creates an explosion animation"""
     def __init__(self, pos_x, pos_y):
         super().__init__()
         self.is_animating = False
@@ -67,6 +69,7 @@ class Explosion(pygame.sprite.Sprite):
                 self.image = self.sprites[int(self.current_sprite)]
 
 class CRT:
+    """Creates a CRT monitor effect"""
     def __init__(self,screen):
         super().__init__()
         self.screen = screen
