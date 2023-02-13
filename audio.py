@@ -46,6 +46,7 @@ class Audio():
         self.player_down.set_volume(self.master_volume)
 
     def update(self):
+        """Updates volume of all sounds and music"""
         self.intro_music.set_volume(self.master_volume)
         self.bg_music.set_volume(self.master_volume)
         self.explosion_sound.set_volume(self.master_volume)
