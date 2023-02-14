@@ -75,7 +75,7 @@ class GameManager:
     def spawn_aliens(self,alien_color):
         self.aliens.add(Alien(alien_color,SCREEN_WIDTH,SCREEN_HEIGHT))
         if alien_color == 'blue':
-            self.audio.channel_5.play(self.audio.ufo_sound) # causes the game to lag
+            self.audio.channel_5.play(self.audio.ufo_sound)
 
     def alien_shoot(self):
         if self.aliens.sprites():
@@ -90,6 +90,7 @@ class GameManager:
         self.explosion.explode()
 
     def collision_checks(self):
+        """All collisions between player, aliens and lasers"""
         # when the player shoots an alien
         if self.player.sprite.lasers:
             for laser in self.player.sprite.lasers:
@@ -135,15 +136,18 @@ class GameManager:
                 pygame.time.set_timer(self.player_death_timer,500)
 
     def score_check(self):
+        """checks the current score against the high score"""
         if self.score > self.save_data['high_score']:
             self.save_data['high_score'] = self.score
 
     def display_hearts(self):
+        """displays the heart icons on the top right"""
         for heart in range(self.hearts):
             x = self.heart_x_start_pos + (heart * (self.heart_surf.get_size()[0] + 10))
             self.screen.blit(self.heart_surf,(x,8))
 
     def pause(self):
+        """Pauses game when ESC is pressed"""
         self.paused = not self.paused
         while self.paused:
             for event in pygame.event.get():
