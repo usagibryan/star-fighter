@@ -174,3 +174,6 @@ poetry.toml
 
 # High Score FIle
 high_score.txt
+
+# VS Code settings
+/.vscode
