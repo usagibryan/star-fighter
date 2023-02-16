@@ -51,8 +51,9 @@ class Explosion(pygame.sprite.Sprite):
     # see sprite sheet tutorials by Coding With Russ:
     # https://www.youtube.com/watch?v=M6e3_8LHc7A
     # https://www.youtube.com/watch?v=M6e3_8LHc7A 
-    def get_image(self, sheet, frame, width ,height, scale):
-        surf = pygame.Surface((width,height)).convert_alpha()
+    @staticmethod # use static method because it does not use the self argument
+    def get_image(sheet, frame, width ,height, scale):
+        surf = pygame.Surface((width,height), pygame.SRCALPHA) # pygame.SRCALPHA gives the surface per-pixel-transparency
         surf.blit(sheet,(0,0),((frame*width),0,width,height))
         surf = pygame.transform.scale(surf, (width * scale, height * scale))
         return surf
