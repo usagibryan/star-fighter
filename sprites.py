@@ -71,7 +71,7 @@ class Player(pygame.sprite.Sprite):
             self.laser_time = pygame.time.get_ticks()
             self.audio.channel_3.play(self.audio.laser_sound)
 
-        # # USB controller input
+        # # USB controller input (doesn't work properly)
         # pygame.joystick.init()
         # joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
 
