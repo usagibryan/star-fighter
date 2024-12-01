@@ -6,7 +6,7 @@ class Audio():
         super().__init__()
         self.master_volume = 0.5 # default value is 1.0
 
-        self.intro_music = pygame.mixer.Sound('audio/star_fox_controls.mp3')
+        self.intro_music = pygame.mixer.Sound('audio/intro_music.wav')
         self.intro_music.set_volume(self.master_volume)
         self.channel_0 = pygame.mixer.Channel(0)
         self.play_intro_music = True # Set to False after user begins, only place once
@@ -42,7 +42,7 @@ class Audio():
         self.unpause_sound.set_volume(self.master_volume)
         self.channel_7 = pygame.mixer.Channel(7)
 
-        self.player_down = pygame.mixer.Sound('audio/player_down.mp3')
+        self.player_down = pygame.mixer.Sound('audio/game_over.ogg')
         self.player_down.set_volume(self.master_volume)
 
     def update(self):

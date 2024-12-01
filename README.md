@@ -23,8 +23,3 @@ Each alien sprite behaves differently and is worth a different score value based
 * <img src="https://github.com/usagibryan/star_fighter/blob/main/graphics/green.png" width="20" height="16"> Moderate Speed - **200 Points**
 * <img src="https://github.com/usagibryan/star_fighter/blob/main/graphics/yellow.png" width="20" height="16"> Fast - Moves in a Zigzag Pattern - **300 Points**
 * <img src="https://github.com/usagibryan/star_fighter/blob/main/graphics/blue.png" width="20" height="10"> Very Fast and Rare - **500 Points**
-
-### Assets
-* "Space Invader" sprites and CRT graphics by [Clear Code](https://opengameart.org/content/assets-for-a-space-invader-like-game)
-* Player ship sprite from [Top-Down Spaceships](https://opengameart.org/content/top-down-spaceships) by arin48
-* Heart sprite from Undertale by Toby Fox

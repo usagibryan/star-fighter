@@ -26,7 +26,7 @@ class GameManager:
 
         # Player Health
         self.hearts = 3
-        self.heart_surf = pygame.image.load('graphics/undertale_heart.png').convert_alpha()
+        self.heart_surf = pygame.image.load('graphics/heart.png').convert_alpha()
         self.heart_x_start_pos = SCREEN_WIDTH - (self.heart_surf.get_size()[0] * 3 + 30)
 
         # Background Setup
