@@ -172,7 +172,7 @@ poetry.toml
 
 # End of https://www.toptal.com/developers/gitignore/api/python
 
-# High Score FIle
+# High Score File
 high_score.txt
 
 # VS Code settings
