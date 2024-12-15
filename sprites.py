@@ -75,20 +75,31 @@ class Player(pygame.sprite.Sprite):
         pygame.joystick.init()
         joysticks = [pygame.joystick.Joystick(i) for i in range(pygame.joystick.get_count())]
 
-        # USB controller input
-        # movement is VERY SLOW for some reason
+        # Method to move via joystick, movement is VERY SLOW for some reason
         x_speed = round(pygame.joystick.Joystick(0).get_axis(0))
         y_speed = round(pygame.joystick.Joystick(0).get_axis(1))
         self.joystick_move(x_speed,y_speed)
-
-        # Laser is poorly responsive
+        
         for event in pygame.event.get():
-          if event.type == pygame.JOYBUTTONDOWN:
-              if pygame.joystick.Joystick(0).get_button(0) and self.ready: # A button shoots the laser
-                  self.shoot_laser()
-                  self.ready = False
-                  self.laser_time = pygame.time.get_ticks()
-                  self.audio.channel_3.play(self.audio.laser_sound)
+            # # This method is even worse, much slower and you have to tap the stick
+            if event.type == pygame.JOYAXISMOTION:
+			# print(event)
+			# Axis 1 (Vertical movement) controls paddle
+                if event.axis == 1:  # Vertical axis on most joysticks
+                    if event.value < -0.1:  # Push up
+                        self.rect.y -= self.speed
+                    elif event.value > 0.1:  # Push down
+                        self.rect.y += self.speed
+                    # else:  # Stick is centered
+                    #     self.rect.y = 0
+            
+            # Laser is poorly responsive
+            if event.type == pygame.JOYBUTTONDOWN:
+                if pygame.joystick.Joystick(0).get_button(0) and self.ready: # A button shoots the laser
+                    self.shoot_laser()
+                    self.ready = False
+                    self.laser_time = pygame.time.get_ticks()
+                    self.audio.channel_3.play(self.audio.laser_sound)
 
     def recharge(self):
         if not self.ready:
