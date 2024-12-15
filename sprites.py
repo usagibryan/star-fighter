@@ -73,7 +73,7 @@ class Player(pygame.sprite.Sprite):
 
         # # USB controller input
         pygame.joystick.init()
-        joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
+        joysticks = [pygame.joystick.Joystick(i) for i in range(pygame.joystick.get_count())]
 
         # USB controller input
         # movement is VERY SLOW for some reason
