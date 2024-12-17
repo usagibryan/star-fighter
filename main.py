@@ -157,7 +157,7 @@ class GameManager:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
+                    if event.key == pygame.K_F11:
                         pygame.display.toggle_fullscreen()
                     if event.key == pygame.K_ESCAPE:
                         self.audio.channel_0.unpause()
@@ -181,7 +181,7 @@ class GameManager:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    if event.mod & pygame.KMOD_ALT and event.key in [pygame.K_RETURN, pygame.K_KP_ENTER]:
+                    if event.key == pygame.K_F11:
                         pygame.display.toggle_fullscreen()
                     if event.key == pygame.K_ESCAPE:
                         self.audio.channel_0.pause()
