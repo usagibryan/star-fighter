@@ -6,13 +6,13 @@ class Audio():
         super().__init__()
         self.master_volume = 0.5 # default value is 1.0
 
-        self.intro_music = pygame.mixer.Sound('audio/intro_music.wav')
+        self.intro_music = pygame.mixer.Sound('audio/star_fighter_intro.ogg')
         self.intro_music.set_volume(self.master_volume)
         self.channel_0 = pygame.mixer.Channel(0)
         self.play_intro_music = True # Set to False after user begins, only place once
 
         self.bg_music = pygame.mixer.Sound('audio/star_hero.mp3')
-        self.bg_music.set_volume(self.master_volume * 2) # very low for some reason
+        self.bg_music.set_volume(self.master_volume)
         self.channel_1 = pygame.mixer.Channel(1)
 
         self.explosion_sound = pygame.mixer.Sound('audio/explosion.wav')

@@ -75,10 +75,10 @@ class Player(pygame.sprite.Sprite):
         pygame.joystick.init()
         joysticks = [pygame.joystick.Joystick(i) for i in range(pygame.joystick.get_count())]
 
-        # Method to move via joystick, movement is VERY SLOW for some reason
-        x_speed = round(pygame.joystick.Joystick(0).get_axis(0))
-        y_speed = round(pygame.joystick.Joystick(0).get_axis(1))
-        self.joystick_move(x_speed,y_speed)
+        # # Method to move via joystick, movement is VERY SLOW for some reason
+        # # x_speed = round(pygame.joystick.Joystick(0).get_axis(0))
+        # y_speed = round(pygame.joystick.Joystick(0).get_axis(1))
+        # self.joystick_move(x_speed,y_speed)
         
         for event in pygame.event.get():
             # # This method is even worse, much slower and you have to tap the stick
