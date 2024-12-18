@@ -53,7 +53,7 @@ class Audio():
 
     def update(self):
         """Updates volume of all sounds and music"""
-        self.intro_music.set_volume(self.master_volume)
+        self.intro_music.set_volume(self.master_volume * 2)
         self.bg_music.set_volume(self.master_volume)
         self.player_down.set_volume(self.master_volume)
         self.laser_sound.set_volume(self.master_volume / 2)
